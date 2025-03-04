@@ -32,13 +32,15 @@
         - This folder holds all of the data sets after the metadata and gene expression data has been merged by the `collectMerged()` function
     - meta/
         - This folder holds all of the metadata for the different data sets obtained from <b>OSF</b>
-    - [models/](./models/Contents.md)
+    - models/
         - This folder holds all of the fit models that I use in my analysis, so I don't have to recreate them when I need to use them again.
     - [others/](./others/Contents.md)
         - This folder holds the other random things I use in generating documents and testing things in my project.
     - [plots/](./plots/Contents.md)
         - This folder holds all of the plots I have generated during my analysis for various reasons
-    - [recipes/](./recipes/Contents.md)
+    - pdfs/
+        - This folder contains pdf versions of my updates
+    - recipes/
         - This folder holds all of the recipes I use at any time to bake my data before analysis
     - [scripts/](./scripts/Contents.md)
         - This folder holds all of the scripts that I use to run my analysis
