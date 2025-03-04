@@ -1,0 +1,21 @@
+# Contents
+
+- [Bake Files](./bakeFiles.R)
+    - This is to automatically bake many data sets with a given recipe
+    - It also stores the baked data in the specified folder
+- [Collect Merged](./collectMerged.R)
+    - This is to collect and combine the meta data and gene expression data from one study together quickly.
+- [Color](./color.R)
+    - This is used to format my text output with colors to make it easier to see the different things that I am outputting
+- [Markdown Metrics](./mdMetrics.R)
+    - This is to collect and print out a neat form of the metrics for a trained machine learning model to include in my updates.
+- [Plot PCA](./plotPCA.R)
+    - This is to automatically plot a 2D PCA result for a data set for easy visualization of the data sets
+- [Read Files](./readFiles.R)
+    - This is to automatically read in the various files in my `merged/` folder and assign them variables in my R session.
+- [ROC Curve](./rocCurve.R)
+    - This is to automatically find the area under a ROC curve and save a nice ROC curve to my `plots/` folder.
+- [Split Data](./splitData.R)
+    - This is used in order to generate a split in a data set into train, val, and test sets
+- [Timer](./timer.R)
+    - This is used in order to keep track of how long different parts of my code are running
