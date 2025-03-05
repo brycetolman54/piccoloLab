@@ -31,7 +31,7 @@ cat("|:---:|:---:|:---:|:---:|:---:|:---:|\n")
 for(i in 1:12) {
     catMetrics(dataList[[i]],
                dataNames[((i - 1) %% 4) + 1],
-               typeNames[ceiling(5 / 4)])
+               typeNames[ceiling(i / 4)])
 }
 
 cat("\n")
@@ -55,16 +55,16 @@ testAfter = tibblerize(testAfter, testClasses)
 
 # do PCA of all combinations before, embedded, and after #######################
 
-dataList = c("trainBefore", "valBefore", "testBefore",
+dataSets = c("trainBefore", "valBefore", "testBefore",
              "trainEmbed", "valEmbed", "testEmbed",
              "trainAfter", "valAfter", "testAfter")
 standards = c("standardBefore", "standardEmbed", "standardAfter")
 
 for(i in 1:9) {
-    plotPCA(c(standards[((i - 1) %% 3) + 1], dataList[i]),
-            title = dataList[i],
+    plotPCA(c(standards[ceiling(i / 3)], dataSets[i]),
+            title = dataSets[i],
             folder = plots,
-            filename = dataList[i])
+            filename = paste0(dataSets[i], "ROC"))
 }
 
 # bake recipes #################################################################
@@ -86,21 +86,18 @@ afterRecipe = recipe(formula, data = standardAfter) |>
 
 cat("\n")
 
-bakeFiles(before[1:4], 
-          beforeRecipe,
-          subfolder)
-bakeFiles(embed[1:4], 
-          embedRecipe,
-          subfolder)
-bakeFiles(after[1:4], 
-          afterRecipe,
-          subfolder)
+recipes = list(beforeRecipe, embedRecipe, afterRecipe)
+
+for(i in 1:3) {
+    bakeFiles(standards[i],
+              recipes[[i]])
+}
+for (i in 1:9) {
+    bakeFiles(dataSets[i], 
+              recipes[[ceiling(i / 3)]])
+}
 
 cat("\n")
-
-saveRDS(beforeRecipe, paste0(recipes, "before.rds"))
-saveRDS(embedRecipe, paste0(recipes, "embed.rds"))
-saveRDS(afterRecipe, paste0(recipes, "after.rds"))
 
 # train the models #############################################################
 
@@ -120,127 +117,24 @@ beforeModelFit = beforeModel |> fit(formula, data = standardBefore)
 embedModelFit = embedModel |> fit(formula, data = standardEmbed)
 afterModelFit = afterModel |> fit(formula, data = standardAfter)
 
-saveRDS(beforeModelFit, paste0(models, "before.rds"))
-saveRDS(embedModelFit, paste0(models, "embed.rds"))
-saveRDS(afterModelFit, paste0(models, "after.rds"))
-
 # predict on the data ##########################################################
 
-before = list(trainBefore, valBefore, after, beforeModelFit)
-embed = list(trainEmbed, valEmbed, testEmbed, embedModelFit)
-after = list(trainAfter, valAfter, testAfter, afterModelFit)
+dataList = list(trainBefore, valBefore, testBefore,
+              trainEmbed, valEmbed, testEmbed,
+              trainAfter, valAfter, testAfter)
+models = list(beforeModelFit, embedModelFit, afterModelFit)
 
 suppressWarnings({
-    for(i in 1:3) {
-        name = paste0(names[i + 1], " Before")
-        mdMetrics(before[[4]],
-                  before[[i]],
-                  setName = name,
+    for(i in 1:9) {
+        mdMetrics(models[[ceiling(i / 3)]],
+                  dataList[[i]],
+                  setName = dataSets[i],
                   num = i)
-        rocCurve(before[[4]],
-                 before[[i]],
-                 filename = paste0(name, "ROC"),
-                 folder = plots,
-                 title = name,
-                 num = i)
     }
 })
-
-suppressWarnings({
-    mdMetrics(beforeModelFit,
-              train,
-              setName = "Train Before",
-              num = 1)
-    mdMetrics(beforeModelFit,
-              val,
-              setName = "Val Before",
-              num = 2)
-    mdMetrics(beforeModelFit,
-              test,
-              setName = "Test Before",
-              num = 3)
-    
-    mdMetrics(embedModelFit,
-              trainEmbed,
-              setName = "Train Embed",
-              num = 4)
-    mdMetrics(embedModelFit,
-              valEmbed,
-              setName = "Val Embed",
-              num = 5)
-    mdMetrics(embedModelFit,
-              testEmbed,
-              setName = "Test Embed",
-              num = 6)
-    
-    mdMetrics(afterModelFit,
-              trainAfter,
-              setName = "Train After",
-              num = 7)
-    mdMetrics(afterModelFit,
-              valAfter,
-              setName = "Val After",
-              num = 8)
-    mdMetrics(afterModelFit,
-              testAfter,
-              setName = "Test After",
-              num = 9)
-})
-
-rocCurve(beforeModelFit,
-         train,
-         filename = "trainBeforeROC",
+rocCurve(models[[ceiling(i / 3)]],
+         dataList[[i]],
+         filename = paste0(dataSets[i], "ROC"),
          folder = plots,
-         title = "Train Before",
-         num = 1)
-rocCurve(beforeModelFit,
-         val,
-         filename = "valBeforeROC",
-         folder = plots,
-         title = "Val Before",
-         num = 2)
-rocCurve(beforeModelFit,
-         test,
-         filename = "testBeforeROC",
-         folder = plots,
-         title = "Test Before",
-         num = 3)
-
-rocCurve(embedModelFit,
-         trainEmbed,
-         filename = "trainEmbedROC",
-         folder = plots,
-         title = "Train Embed",
-         num = 4)
-rocCurve(embedModelFit,
-         valEmbed,
-         filename = "valEmbedROC",
-         folder = plots,
-         title = "Val Embed",
-         num = 5)
-rocCurve(embedModelFit,
-         testEmbed,
-         filename = "testEmbedROC",
-         folder = plots,
-         title = "Test Embed",
-         num = 6)
-
-rocCurve(afterModelFit,
-         trainAfter,
-         filename = "trainAfterROC",
-         folder = plots,
-         title = "Train After",
-         num = 7)
-rocCurve(afterModelFit,
-         valAfter,
-         filename = "valAfterROC",
-         folder = plots,
-         title = "Val After",
-         num = 8)
-rocCurve(afterModelFit,
-         testAfter,
-         filename = "testAfterROC",
-         folder = plots,
-         title = "Test After",
-         num = 9)
-
+         title = paste0("Standard predicting on ", dataSets[i]),
+         num = i)

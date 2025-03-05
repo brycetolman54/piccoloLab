@@ -4,10 +4,12 @@ run  = function(file) {
     source(paste0("scripts/11_Adversarial_Network/", file, ".R"))
 }
 
+valCheck = FALSE
+stall = FALSE
+
 run("setup")
-run("defineFunctions")
 run("prepareData")
-run("initalClassification")
+run("initialClassification")
 run("modelSetup")
 run("train")
 run("verify")

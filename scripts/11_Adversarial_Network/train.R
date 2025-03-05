@@ -1,5 +1,7 @@
+cat("Training:\n")
+
 # define some variables
-epochs = 1000
+epochs = 1200
 interval = 10
 batchSize = 64
 
@@ -121,34 +123,39 @@ time = timer({
 
             color(printMetrics(progressData, "val", "embedded"), 5)
 
-            color(cat("Continue?"), 46)
-            continue = readline()
-            if(continue == "n") {
-                break
-            } else if(continue == "s") {
-                tryCatch({
-                    stop("Stopped")
-                }, error = function(e){})
-            } # end if else
+            if(stall) {
+                color(cat("Continue?"), 46)
+                continue = readline()
+                if(continue == "n") {
+                    break
+                } else if(continue == "s") {
+                    tryCatch({
+                        stop("Stopped")
+                    }, error = function(e){})
+                } # end if else
+            } # end if
         } # end if
     } # end for
 }, min = TRUE)
 
 cat("\nTrained in ", time, "\n", sep = "")
 
-# output for validation
-cat("\n|",
-    layers, "|",
-    dLayers, "|",
-    units, "|",
-    actFun, "|",
-    dActFun, "|",
-    optim, "|",
-    dropout, "|",
-    batchSize, "|",
-    epoch, "|",
-    round(sd(progressData) / max(progressData), 3), "|",
-    round(max(progressData), 3), "|",
-    round(valMetric[index], 3) * 100, "|"
-)
+ggsave(paste0(plots, "_trainModel_.jpg"), plot = last_plot(), width = 6, height = 4)
 
+# output for validation
+if(valCheck) {
+    cat("\n|",
+        layers, "|",
+        dLayers, "|",
+        units, "|",
+        actFun, "|",
+        dActFun, "|",
+        optim, "|",
+        dropout, "|",
+        batchSize, "|",
+        epoch, "|",
+        round(sd(progressData) / max(progressData), 3), "|",
+        round(max(progressData), 3), "|",
+        round(valMetric[index], 3) * 100, "|"
+    )
+}

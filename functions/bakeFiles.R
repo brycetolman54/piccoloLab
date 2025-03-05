@@ -1,4 +1,4 @@
-bakeFiles = function(files, recipe, subFolder = "") {
+bakeFiles = function(files, recipe) {
     size = length(files)
     geneNames = list()
     for(i in 1:size) {
@@ -9,6 +9,5 @@ bakeFiles = function(files, recipe, subFolder = "") {
         eval(expr(!!sym(name) <<- bake(recipe, new_data = !!sym(name))))
         end = Sys.time()
         cat("\t", substring(seconds(end - start), 1, 5), " s\n", sep = "")
-        eval(expr(write_tsv(!!sym(name), paste0("baked/", subFolder, name, ".tsv"))))
     }
 }

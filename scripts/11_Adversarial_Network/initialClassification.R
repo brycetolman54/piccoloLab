@@ -17,12 +17,8 @@ recipeNovel = recipe(formula, data = GSE62944) |>
 newGSE62944 = GSE62944
 
 # bake the data
-bakeFiles(dataSets, recipe, subfolder)
-bakeFiles("newGSE62944", recipeNovel, subfolder)
-
-# save the recipe
-saveRDS(recipe, paste0(recipes, "Initial_Classification.rds"))
-saveRDS(recipe, paste0(recipes, "Initial_Classification_Each_Recipe.rds"))
+bakeFiles(dataSets, recipe)
+bakeFiles("newGSE62944", recipeNovel)
 
 cat("\n")
 
@@ -34,7 +30,6 @@ model = rand_forest(trees = 25,
                     mode = "classification",
                     engine = "ranger")
 fitModel = model |> fit(formula, data = METABRIC)
-saveRDS(fitModel, paste0(models, "Initial_Classification.rds"))
 
 # predict on the test data
 dataSetVars = mget(dataSets)
