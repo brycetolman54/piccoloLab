@@ -16,35 +16,32 @@ trainAfter = standardDecoder |> predict(trainEmbed, verbose = 0)
 valAfter = standardDecoder |> predict(valEmbed, verbose = 0)
 testAfter = standardDecoder |> predict(testEmbed, verbose = 0)
 
+dataList = list(standardMat, trainMat, valMat, testMat,
+                standardEmbed, trainEmbed, valEmbed, testEmbed,
+                standardAfter, trainAfter, valAfter, testAfter)
+typeNames = c("before", "embed", "after")
+dataNames = c("standard", "train", "val", "test")
+
 # show the metrics of the data sets ############################################
 
 cat("\n")
 cat("| Data Set | Max | Min | Mean | Median | SD |\n")
 cat("|:---:|:---:|:---:|:---:|:---:|:---:|\n")
 
-catMetrics(trainMat, "train", "before")
-catMetrics(valMat, "val", "before")
-catMetrics(testMat, "test", "before")
-catMetrics(standardMat, "standard", "before")
-
-catMetrics(trainEmbed, "train", "embedded")
-catMetrics(valEmbed, "val", "embedded")
-catMetrics(testEmbed, "test", "embedded")
-catMetrics(standardEmbed, "standard", "embedded")
-
-catMetrics(trainAfter, "train", "after")
-catMetrics(valAfter, "val", "after")
-catMetrics(testAfter, "test", "after")
-catMetrics(standardAfter, "standard", "after")
+for(i in 1:12) {
+    catMetrics(dataList[[i]],
+               dataNames[((i - 1) %% 4) + 1],
+               typeNames[ceiling(5 / 4)])
+}
 
 cat("\n")
 
 # make the data tibbles with classes again #####################################
 
-standard = tibblerize(standard, standardClasses)
-train = tibblerize(train, trainClasses)
-val = tibblerize(val, valClasses)
-test = tibblerize(test, testClasses)
+standardBefore = tibblerize(standard, standardClasses)
+trainBefore = tibblerize(train, trainClasses)
+valBefore = tibblerize(val, valClasses)
+testBefore = tibblerize(test, testClasses)
 
 standardEmbed = tibblerize(standardEmbed, standardClasses)
 trainEmbed = tibblerize(trainEmbed, trainClasses)
@@ -58,55 +55,26 @@ testAfter = tibblerize(testAfter, testClasses)
 
 # do PCA of all combinations before, embedded, and after #######################
 
-plotPCA(c("standard", "train"),
-        title = "Train Before",
-        folder = plots,
-        filename = "trainBefore")
-plotPCA(c("standard", "val"),
-        title = "Val Before",
-        folder = plots,
-        filename = "valBefore")
-plotPCA(c("standard", "test"),
-        title = "Test Before",
-        folder = plots,
-        filename = "testBefore")
+dataList = c("trainBefore", "valBefore", "testBefore",
+             "trainEmbed", "valEmbed", "testEmbed",
+             "trainAfter", "valAfter", "testAfter")
+standards = c("standardBefore", "standardEmbed", "standardAfter")
 
-plotPCA(c("standardEmbed", "trainEmbed"),
-        title = "Train Embedded",
-        folder = plots,
-        filename = "trainEmbed")
-plotPCA(c("standardEmbed", "valEmbed"),
-        title = "Val Embedded",
-        folder = plots,
-        filename = "valEmbed")
-plotPCA(c("standardEmbed", "testEmbed"),
-        title = "Test Embedded",
-        folder = plots,
-        filename = "testEmbed")
-
-plotPCA(c("standardAfter", "trainAfter"),
-        title = "Train After",
-        folder = plots,
-        filename = "trainAfter")
-plotPCA(c("standardAfter", "valAfter"),
-        title = "Val After",
-        folder = plots,
-        filename = "valAfter")
-plotPCA(c("standardAfter", "testAfter"),
-        title = "Test After",
-        folder = plots,
-        filename = "testAfter")
+for(i in 1:9) {
+    plotPCA(c(standards[((i - 1) %% 3) + 1], dataList[i]),
+            title = dataList[i],
+            folder = plots,
+            filename = dataList[i])
+}
 
 # bake recipes #################################################################
 
 set.seed(42)
 
-formula = Class ~ .
-
-beforeRecipe = recipe(formula, data = standard) |>
+beforeRecipe = recipe(formula, data = standardBefore) |>
     step_normalize(all_predictors()) |>
     step_mutate(Class = as.factor(Class)) |>
-    prep(training = standard)
+    prep(training = standardBefore)
 embedRecipe = recipe(formula, data = standardEmbed) |>
     step_normalize(all_predictors()) |>
     step_mutate(Class = as.factor(Class)) |>
@@ -118,13 +86,13 @@ afterRecipe = recipe(formula, data = standardAfter) |>
 
 cat("\n")
 
-bakeFiles(c("standard", "train", "val", "test"), 
+bakeFiles(before[1:4], 
           beforeRecipe,
           subfolder)
-bakeFiles(c("standardEmbed", "trainEmbed", "valEmbed", "testEmbed"), 
+bakeFiles(embed[1:4], 
           embedRecipe,
           subfolder)
-bakeFiles(c("standardAfter", "trainAfter", "valAfter", "testAfter"), 
+bakeFiles(after[1:4], 
           afterRecipe,
           subfolder)
 
@@ -148,7 +116,7 @@ afterModel = rand_forest(trees = 25,
                           mode = "classification",
                           engine = "ranger")
 
-beforeModelFit = beforeModel |> fit(formula, data = standard)
+beforeModelFit = beforeModel |> fit(formula, data = standardBefore)
 embedModelFit = embedModel |> fit(formula, data = standardEmbed)
 afterModelFit = afterModel |> fit(formula, data = standardAfter)
 
@@ -157,6 +125,26 @@ saveRDS(embedModelFit, paste0(models, "embed.rds"))
 saveRDS(afterModelFit, paste0(models, "after.rds"))
 
 # predict on the data ##########################################################
+
+before = list(trainBefore, valBefore, after, beforeModelFit)
+embed = list(trainEmbed, valEmbed, testEmbed, embedModelFit)
+after = list(trainAfter, valAfter, testAfter, afterModelFit)
+
+suppressWarnings({
+    for(i in 1:3) {
+        name = paste0(names[i + 1], " Before")
+        mdMetrics(before[[4]],
+                  before[[i]],
+                  setName = name,
+                  num = i)
+        rocCurve(before[[4]],
+                 before[[i]],
+                 filename = paste0(name, "ROC"),
+                 folder = plots,
+                 title = name,
+                 num = i)
+    }
+})
 
 suppressWarnings({
     mdMetrics(beforeModelFit,

@@ -35,7 +35,7 @@
 
 - [X] Create a histogram for <i>GSE62944</i> that shows variance per gene
 - [X] Create a histogram for <i>GSE62944</i> that shows average expression per gene
-    - [X]] Find a number of bins that works to show this well (maybe have two plot, one where you restrict the range a lot)
+    - [X] Find a number of bins that works to show this well (maybe have two plot, one where you restrict the range a lot)
 - [X] Create a scatter plot showing gene expression for <i>GSE62944</i> on x and <i>GSE25055</i> on y
 
 - [X] Update the ROC plot function with description and title

@@ -49,6 +49,7 @@
     - [variables/](./variables)
         - This folder holds any variables that are particularly important in my analysis that I don't want to have to obtain again when I need them.
 - Some of these folders are not present in this repository because they only contain data, which I do not want to take up room in the repository since it is already stored in [OSF](https://osf.io/eky3p/)
+- Furthermore, my models and recipes are too large to store on GitHub, so they are not found here.
 - Hopefully that helps in explaining what everything is for and in finding anything of interest
 
 <!--}-->
