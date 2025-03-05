@@ -22,8 +22,6 @@
 <!--{-->
 
 - These are the folders that I have in my working directory:
-    - baked/
-        - This folder holds all of the merged data that has been baked by the `tidymodels` recipe
     - data/
         - This folder holds the raw gene expression data obtained from <b>OSF</b>
     - [functions/](./functions/Contents.md)
@@ -33,15 +31,13 @@
     - meta/
         - This folder holds all of the metadata for the different data sets obtained from <b>OSF</b>
     - models/
-        - This folder holds all of the fit models that I use in my analysis, so I don't have to recreate them when I need to use them again.
+        - This folder holds all of the fit keras models that I use in my analysis, so I don't have to recreate them when I need to use them again.
     - [others/](./others/Contents.md)
         - This folder holds the other random things I use in generating documents and testing things in my project.
     - [plots/](./plots/Contents.md)
         - This folder holds all of the plots I have generated during my analysis for various reasons
     - pdfs/
         - This folder contains pdf versions of my updates
-    - recipes/
-        - This folder holds all of the recipes I use at any time to bake my data before analysis
     - [scripts/](./scripts/Contents.md)
         - This folder holds all of the scripts that I use to run my analysis
     - [updates/](./updates/Contents.md)
@@ -49,7 +45,7 @@
     - [variables/](./variables)
         - This folder holds any variables that are particularly important in my analysis that I don't want to have to obtain again when I need them.
 - Some of these folders are not present in this repository because they only contain data, which I do not want to take up room in the repository since it is already stored in [OSF](https://osf.io/eky3p/)
-- Furthermore, my models and recipes are too large to store on GitHub, so they are not found here.
+- Furthermore, my models are too large to store on GitHub, so they are not found here.
 - Hopefully that helps in explaining what everything is for and in finding anything of interest
 
 <!--}-->

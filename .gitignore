@@ -1,7 +1,8 @@
-baked/
 data/
 merged/
 meta/
 pdfs/
-recipes/
 models/
+.Rdata
+.Rhistory
+.old/
