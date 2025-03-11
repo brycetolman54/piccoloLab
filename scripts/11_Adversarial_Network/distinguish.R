@@ -6,22 +6,35 @@ source("functions/rocCurve.R")
 source("functions/mdMetrics.R")
 source("functions/plotPCA.R")
 
+# make a function
+tibblerize = function(data, classes) {
+    data = as_tibble(data, .name_repair = ~paste0("col_", seq_len(ncol(data))))
+    data = bind_cols(data, classes)
+    return(data)
+}
+
 # load the Encoders and Decoder
 decoder = load_model("models/10_Standard_Auto_Encoder/decoder.keras")
 encoderGSE25055 = load_model("models/11_Adversarial_Network/encoder_GSE25055.keras")
-encoder62944 = load_model("models/11_Adversarial_Network/encoder_GSE62944.keras")
+encoderGSE62944 = load_model("models/11_Adversarial_Network/encoder_GSE62944.keras")
 
 # load the data
 genes = readLines("variables/lessGenes.txt")[1:100]
 if(!exists("GSE25055") || !exists("GSE62944")) {
     readFiles(c("GSE25055", "GSE62944"), columns = c("Class", genes))
 }
+cat("\n")
 
 # set some variables
 formula = Class ~ .
 
-matGSE25055 = as.matrix(GSE25055)
-matGSE62944 = as.matrix(GSE62944)
+classesGSE25055 = GSE25055 |> select(Class)
+classesGSE62944 = GSE62944 |> select(Class)
+
+# get the data sets
+
+matGSE25055 = as.matrix(GSE25055 |> select(-Class))
+matGSE62944 = as.matrix(GSE62944 |> select(-Class))
 
 beforeGSE25055 = GSE25055
 beforeGSE62944 = GSE62944
@@ -29,23 +42,14 @@ beforeGSE62944 = GSE62944
 embedMatGSE25055 = encoderGSE25055 |> predict(matGSE25055, verbose = 0)
 embedMatGSE62944 = encoderGSE62944 |> predict(matGSE62944, verbose = 0)
 
-embedGSE25055 = as_tibble(embedMatGSE25055,
-                          .name_repair = ~paste0("col_",
-                                                 seq_len(ncol(embedMatGSE25055))))
-embedGSE62944 = as_tibble(embedMatGSE62944,
-                          .name_repair = ~paste0("col_",
-                                                 seq_len(ncol(embedMatGSE62944))))
-
-
 afterMatGSE25055 = decoder |> predict(embedMatGSE25055, verbose = 0)
 afterMatGSE62944 = decoder |> predict(embedMatGSE62944, verbose = 0)
 
-afterGSE25055 = as_tibble(afterMatGSE25055,
-                          .name_repair = ~paste0("col_",
-                                                 seq_len(ncol(afterMatGSE25055))))
-afterGSE62944 = as_tibble(afterMatGSE62944,
-                          .name_repair = ~paste0("col_",
-                                                 seq_len(ncol(afterMatGSE62944))))
+embedGSE25055 = tibblerize(embedMatGSE25055, classesGSE25055)
+embedGSE62944 = tibblerize(embedMatGSE62944, classesGSE62944)
+
+afterGSE25055 = tibblerize(afterMatGSE25055, classesGSE25055)
+afterGSE62944 = tibblerize(afterMatGSE62944, classesGSE62944)
 
 # make recipes
 beforeRecipe = recipe(formula, data = beforeGSE25055) |>
@@ -78,6 +82,7 @@ after = rand_forest(trees = 25,
 bakeFiles(c("beforeGSE25055", "beforeGSE62944"), beforeRecipe)
 bakeFiles(c("embedGSE25055", "embedGSE62944"), embedRecipe)
 bakeFiles(c("afterGSE25055", "afterGSE62944"), afterRecipe)
+cat("\n")
 
 # train the models
 beforeFit = before |> fit(formula, data = beforeGSE25055)
@@ -97,6 +102,7 @@ plotPCA(c("afterGSE25055", "afterGSE62944"),
         title = "After Conformation",
         folder = "plots/11_Adversarial_Network/distinguish/",
         filename = "afterPCA")
+cat("\n")
 
 # get the metrics
 suppressWarnings({
@@ -137,8 +143,30 @@ rocCurve(afterFit,
          subtitle = "GSE25055 predicting on GSE62944",
          num = 1)
 
-
-
+suppressWarnings({
+    rm(
+        bakeFiles,
+        beforeGSE25055,
+        beforeGSE62944,
+        classesGSE25055,
+        classesGSE62944,
+        decoder,
+        embedMatGSE25055,
+        encoderGSE62944,
+        encoderGSE25055,
+        formula,
+        genes,
+        # GSE25055,
+        # GSE62944,
+        matGSE25055,
+        matGSE62944,
+        mdMetrics,
+        plotPCA,
+        readFiles,
+        rocCurve,
+        tibblerize
+    )
+})
 
 
 
