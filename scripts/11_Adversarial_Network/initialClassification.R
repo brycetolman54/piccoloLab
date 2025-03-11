@@ -2,23 +2,20 @@
 formula = Class ~ .
 
 # craft the recipe
-recipe = recipe(formula, data = METABRIC) |>
+recipe = recipe(formula, data = Standard) |>
     step_normalize(all_predictors()) |>
     step_mutate(Class = as.factor(Class)) |>
-    prep(training = METABRIC)
+    prep(training = Standard)
 
 # craft recipe for novel data separately
-recipeNovel = recipe(formula, data = GSE62944) |>
+recipeNovel = recipe(formula, data = novel) |>
     step_normalize(all_predictors()) |>
     step_mutate(Class = as.factor(Class)) |>
-    prep(training = GSE62944)
-
-# bake the novel by itself first
-newGSE62944 = GSE62944
+    prep(training = novel)
 
 # bake the data
-bakeFiles(dataSets, recipe)
-bakeFiles("newGSE62944", recipeNovel)
+bakeFiles(c("Standard", novelName), recipe)
+bakeFiles(newNovelName, recipeNovel)
 
 cat("\n")
 
@@ -29,39 +26,38 @@ set.seed(42)
 model = rand_forest(trees = 25,
                     mode = "classification",
                     engine = "ranger")
-fitModel = model |> fit(formula, data = METABRIC)
+fitModel = model |> fit(formula, data = Standard)
 
 # predict on the test data
-dataSetVars = mget(dataSets)
 suppressWarnings({
     mdOut = mdMetrics(fitModel,
-                      dataSetVars[[2]],
-                      setName = dataSets[2],
+                      get(novelName),
+                      setName = novelName,
                       num = 1,
                       mdOutput = FALSE,
                       output = TRUE)
     mdOut2 = mdMetrics(fitModel,
-                       newGSE62944,
-                       setName = "newGSE62944",
+                       get(newNovelName),
+                       setName = newNovelName,
                        num = 2,
                        mdOutput = FALSE,
                        output = TRUE)
 })
 rcOut = rocCurve(fitModel,
-                 dataSetVars[[2]],
-                 filename = dataSets[2],
+                 get(novelName),
+                 filename = novelName,
                  folder = plots,
                  title = "Initial Classification",
-                 subtitle = paste0("METABRIC predicting on ", dataSets[2]),
+                 subtitle = paste0("METABRIC predicting on ", novelName),
                  num = 1,
                  plot = FALSE,
                  output = TRUE)
 rcOut2 = rocCurve(fitModel,
-                  newGSE62944,
-                  filename = "newGSE62944",
+                  get(newNovelName),
+                  filename = newNovelName,
                   folder = plots,
                   title = "Initial Classification Each Recipe",
-                  subtitle = "METABRIC predicting on newGSE62944",
+                  subtitle = paste0("METABRIC predicting on ", newNovelName),
                   num = 2,
                   plot = FALSE,
                   output = TRUE)
@@ -75,12 +71,16 @@ cat("\n")
 cat("  Stats Each Recipe:\n")
 cat("    Accuracy:\t", round((mdOut2$metrics |> dplyr::filter(.metric == "accuracy"))$.estimate, 3), "\n")
 cat("    ROC AUC:\t", round(rcOut2$auc$.estimate, 3), "\n")
+cat("\n")
 
-# do PCA of the standard and novel (shaped by its own recipe)
-plotPCA(c("METABRIC", "newGSE62944"),
-        title = "Separate Range PCA Plot",
-        mdOutput = FALSE,
+# do PCA of the standard and novel
+plotPCA(c("Standard", novelName),
+        title = "Same Range Recipe PCA Plot",
         folder = plots,
-        filename = "rangeEach")
+        filename = paste0(novelName, "PCA"))
+plotPCA(c("Standard", newNovelName),
+        title = "Separate Range Recipe PCA Plot",
+        folder = plots,
+        filename = paste0("rangeEach", novelName, "PCA"))
 cat("\n")
 

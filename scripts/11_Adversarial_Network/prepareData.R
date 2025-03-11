@@ -2,12 +2,19 @@
 genes = readLines("variables/lessGenes.txt")[1:100]
 
 # load the data
-dataSets = c("METABRIC", "GSE62944")
-if(!exists("METABRIC") || !exists("GSE62944")) {
-    readFiles(dataSets, columns = c("Class", genes))
+newNovelName = paste0("new", novelName)
+
+if(!exists("METABRIC")) {
+    readFiles("METABRIC", columns = c("Class", genes))
+}
+if(!exists(novelName)) {
+    readFiles(novelName, columns = c("Class", genes))
 }
 standard = METABRIC
-novel = GSE62944
+Standard = METABRIC
+novel = get(novelName)
+assign(newNovelName, novel)
+
 
 split = splitData(novel, 0.3, 0.3, 0)
 

@@ -3,7 +3,7 @@
 if(!exists("Encoder") || !exists("standardEncoder") || !exists("standardDecoder")) {
     standardEncoder = load_model("models/10_Standard_Auto_Encoder/encoder.keras")
     standardDecoder = load_model("models/10_Standard_Auto_Encoder/decoder.keras")
-    Encoder = load_model("models/11_Adversarial_Network/encoder.keras")
+    Encoder = load_model(paste0(models, "encoder", "_", novelName, ".keras"))
 }
 
 standardEmbed = standardEncoder |> predict(standardMat, verbose = 0)
@@ -132,9 +132,11 @@ suppressWarnings({
                   num = i)
     }
 })
-rocCurve(models[[ceiling(i / 3)]],
-         dataList[[i]],
-         filename = paste0(dataSets[i], "ROC"),
-         folder = plots,
-         title = paste0("Standard predicting on ", dataSets[i]),
-         num = i)
+for(i in 1:9) {
+    rocCurve(models[[ceiling(i / 3)]],
+             dataList[[i]],
+             filename = paste0(dataSets[i], "ROC"),
+             folder = plots,
+             title = paste0("Standard predicting on ", dataSets[i]),
+             num = i)
+}

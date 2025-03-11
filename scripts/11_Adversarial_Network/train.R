@@ -1,7 +1,7 @@
-cat("Training:\n")
+cat("Training:\n\n")
 
 # define some variables
-epochs = 1200
+epochs = 1000
 interval = 10
 batchSize = 64
 
@@ -140,7 +140,7 @@ time = timer({
 
 cat("\nTrained in ", time, "\n", sep = "")
 
-ggsave(paste0(plots, "_trainModel_.jpg"), plot = last_plot(), width = 6, height = 4)
+ggsave(paste0(plots, "_trainModel_", novelName, "_.jpg"), plot = last_plot(), width = 6, height = 4)
 
 # output for validation
 if(valCheck) {

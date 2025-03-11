@@ -15,7 +15,7 @@ source("functions/splitData.R")
 
 # define folders
 subfolder = "11_Adversarial_Network/"
-plots = paste0("plots/", subfolder)
+plots = paste0("plots/", subfolder, novelName, "/")
 if(!dir.exists(plots)) dir.create(plots)
 models = paste0("models/", subfolder)
 if(!dir.exists(models)) dir.create(models)
@@ -89,9 +89,9 @@ printMetrics = function(data, title, type) {
     cat("\n\n")
 }
 saveModels = function() {
-    save_model(Encoder, paste0(models, "encoder.keras"), overwrite = TRUE)
-    save_model(Discriminator, paste0(models, "discriminator.keras"), overwrite = TRUE)
-    save_model(Adversary, paste0(models, "adversary.keras"), overwrite = TRUE)
+    save_model(Encoder, paste0(models, "encoder", "_", novelName, ".keras"), overwrite = TRUE)
+    save_model(Discriminator, paste0(models, "discriminator", "_", novelName, ".keras"), overwrite = TRUE)
+    save_model(Adversary, paste0(models, "adversary", "_", novelName, ".keras"), overwrite = TRUE)
 }
 catMetrics = function(data, title, type) {
     cat("| ", title, " [", type, "]",

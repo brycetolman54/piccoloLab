@@ -6,7 +6,7 @@ plotPCA = function(dataNames, title = "PCA Plot", normalized = TRUE, plot = FALS
     
     names = paste(dataNames, collapse = ", ")
     
-    cat("\n  Performing PCA on:", names, "\n")
+    # cat("\n  Performing PCA on:", names, "\n")
     
     dataSets = lapply(dataNames, get)
     
@@ -37,7 +37,7 @@ plotPCA = function(dataNames, title = "PCA Plot", normalized = TRUE, plot = FALS
                      scale. = normalized)
     end = Sys.time()
     
-    cat("\b\t", substring(seconds(end - start), 1, 6), "s\n")
+    # cat("\b\t", substring(seconds(end - start), 1, 6), "s\n")
 
     plotData = as_tibble(pcaData$x[,1:2]) |>
                 mutate(Class = classData$Class)
@@ -52,7 +52,7 @@ plotPCA = function(dataNames, title = "PCA Plot", normalized = TRUE, plot = FALS
 
     if(filename != "") {
         if(mdOutput) {
-            cat("    ![Two dimensional PCA plot of ",  names, "](../", folder, filename, extension, "){width=100%}\n", sep = "")
+            cat("![Two dimensional PCA plot of ",  names, "](../", folder, filename, extension, "){width=100%}\n", sep = "")
         }
         ggsave(paste0(folder, filename, extension), pcaPlot, width = 6, height = 6, unit = "in")
     }
