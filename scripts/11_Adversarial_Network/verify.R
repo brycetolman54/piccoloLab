@@ -64,7 +64,7 @@ for(i in 1:9) {
     plotPCA(c(standards[ceiling(i / 3)], dataSets[i]),
             title = dataSets[i],
             folder = plots,
-            filename = paste0(dataSets[i], "ROC"))
+            filename = paste0(dataSets[i], "PCA"))
 }
 
 # bake recipes #################################################################
@@ -128,8 +128,7 @@ suppressWarnings({
     for(i in 1:9) {
         mdMetrics(models[[ceiling(i / 3)]],
                   dataList[[i]],
-                  setName = dataSets[i],
-                  num = i)
+                  setName = dataSets[i])
     }
 })
 for(i in 1:9) {
@@ -137,6 +136,5 @@ for(i in 1:9) {
              dataList[[i]],
              filename = paste0(dataSets[i], "ROC"),
              folder = plots,
-             title = paste0("Standard predicting on ", dataSets[i]),
-             num = i)
+             title = paste0("Standard predicting on ", dataSets[i]))
 }

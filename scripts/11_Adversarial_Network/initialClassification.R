@@ -64,13 +64,13 @@ rcOut2 = rocCurve(fitModel,
 
 # print out some information
 cat("  Stats:\n")
-cat("    Accuracy:\t", round((mdOut$metrics |> dplyr::filter(.metric == "accuracy"))$.estimate, 3), "\n")
-cat("    ROC AUC:\t", round(rcOut$auc$.estimate, 3), "\n")
+cat("    - Accuracy:\t", round((mdOut$metrics |> dplyr::filter(.metric == "accuracy"))$.estimate, 3), "\n")
+cat("    - ROC AUC:\t", round(rcOut$auc$.estimate, 3), "\n")
 cat("\n")
 
 cat("  Stats Each Recipe:\n")
-cat("    Accuracy:\t", round((mdOut2$metrics |> dplyr::filter(.metric == "accuracy"))$.estimate, 3), "\n")
-cat("    ROC AUC:\t", round(rcOut2$auc$.estimate, 3), "\n")
+cat("    - Accuracy:\t", round((mdOut2$metrics |> dplyr::filter(.metric == "accuracy"))$.estimate, 3), "\n")
+cat("    - ROC AUC:\t", round(rcOut2$auc$.estimate, 3), "\n")
 cat("\n")
 
 # do PCA of the standard and novel
