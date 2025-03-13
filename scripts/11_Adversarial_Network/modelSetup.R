@@ -7,18 +7,18 @@ time = timer({
     # set some variables (for the encoder)
     inputSize = length(genes)
     embeddingSize = 10
-    layers = 7
+    layers = 6
     layerDrop = ceiling((inputSize - embeddingSize) / layers)
     actFun = "elu"
     
     optim = "adam"
-    lr = 0.0002
+    lr = 0.0001
     optimizer = optimizer_adam(learning_rate = lr)
     dOptimizer = optimizer_adam(learning_rate = lr)
     loss = "binary_crossentropy"
     metric = "accuracy"
     
-    dLayers = 5
+    dLayers = 6
     units = 32
     dActFun = "elu"
     dropout = FALSE

@@ -1,6 +1,12 @@
-![Two dimensional PCA plot of beforeGSE25055, beforeGSE62944](../plots/11_Adversarial_Network/distinguish/beforePCA.jpg){width=80%}
-![Two dimensional PCA plot of embedGSE25055, embedGSE62944](../plots/11_Adversarial_Network/distinguish/embedPCA.jpg){width=80%}
-![Two dimensional PCA plot of afterGSE25055, afterGSE62944](../plots/11_Adversarial_Network/distinguish/afterPCA.jpg){width=80%}
+---
+geometry: "margin=0.5in"
+---
+
+![Two dimensional PCA plot of beforeGSE25055, beforeGSE62944](../plots/11_Adversarial_Network/distinguish/beforePCA.jpg){width=100%}
+
+![Two dimensional PCA plot of embedGSE25055, embedGSE62944](../plots/11_Adversarial_Network/distinguish/embedPCA.jpg){width=100%}
+
+![Two dimensional PCA plot of afterGSE25055, afterGSE62944](../plots/11_Adversarial_Network/distinguish/afterPCA.jpg){width=100%}
 
 #### Before Conformation Confusion Matrix {#matrix-1} 
 
@@ -44,8 +50,8 @@
 - Recall:       0.866 
 - Specificity:  0.174 
 
-![The area under the ROC Curve is 0.387](../plots/11_Adversarial_Network/distinguish/beforeROC.jpg){#plot-1 width=80%}
+![The area under the ROC Curve is 0.387](../plots/11_Adversarial_Network/distinguish/beforeROC.jpg){#plot-1 width=100%}
 
-![The area under the ROC Curve is 0.499](../plots/11_Adversarial_Network/distinguish/embedROC.jpg){#plot-2 width=80%}
+![The area under the ROC Curve is 0.499](../plots/11_Adversarial_Network/distinguish/embedROC.jpg){#plot-2 width=100%}
 
-![The area under the ROC Curve is 0.551](../plots/11_Adversarial_Network/distinguish/afterROC.jpg){#plot-1 width=80%}
+![The area under the ROC Curve is 0.551](../plots/11_Adversarial_Network/distinguish/afterROC.jpg){#plot-1 width=100%}

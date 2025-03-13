@@ -77,3 +77,8 @@
 - [ ] Train tree on that, predict on GSE62944
 - [ ] After conforming both, add label of data set and see if the model can distinguish them
 - [ ] Randomly select 10 genes instead of using the PCA ones from lessGenes and see if you get similar results
+
+- [ ] Ref: 62944/META
+- [ ] Test: 25055, 25065, 123845 separately
+- [ ] Predict from 25055 to others
+- [ ] With and W/O standardizing before
