@@ -10,7 +10,7 @@ geometry: "margin=1in"
 <!--{-->
 
 | Encoder Layers | Discriminator Layers | Discriminator Units | Function | Discriminator Function | Optimizer | Dropout | Batch Size | Epochs | Rel SD Val | Val Max | Val Accuracy |
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 | 2 | 4 | 32 | elu | elu | adam | FALSE | 16 | 100 | 0.049 | 13044.8 | 100 |
 | 2 | 4 | 32 | elu | elu | adam | FALSE | 32 | 100 | 0.030 | 23838.76 | 100 |
 | 2 | 4 | 32 | elu | elu | adam | FALSE | 48 | 100 | 0.036 | 24941.88 | 99.5 |
@@ -36,36 +36,48 @@ geometry: "margin=1in"
 | 5 | 4 | 48 | elu | elu | adam | FALSE | 64 | 200 | 0.088 | 50.68 | 95.8 |
 | 5 | 4 | 32 | elu | elu | adam | FALSE | 64 | 200 | 0.143 | 17.353 | 79.4 |
 | 7 | 5 | 48 | elu | elu | adam | FALSE | 64 | 250 | 0.204 | 7.021 | 31.3 |
+
 <!-- Now add Batch Normalization to the Decoder -->
+
 | Encoder Layers | Discriminator Layers | Discriminator Units | Function | Discriminator Function | Optimizer | Dropout | Batch Size | Epochs | Rel SD Val | Val Max | Val Accuracy |
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 | 5 | 4 | 32 | elu | elu | adam | FALSE | 64 | 30 | 0.11 | 295670.8 | 0 |
 | 5 | 3 | 32 | elu | elu | adam | FALSE | 64 | 30 | 0.166 | 12291966 | 0.5 |
 | 3 | 3 | 32 | elu | elu | adam | FALSE | 64 | 30 | 0.14 | 334173.9 | 0 |
 | 6 | 3 | 32 | elu | elu | adam | FALSE | 64 | 100 | 0.037 | 920406.8 | 0 |
+
 <!-- With the updated algorithm to use fit() -->
+
 | Encoder Layers | Discriminator Layers | Discriminator Units | Function | Discriminator Function | Optimizer | Dropout | Batch Size | Epochs | Rel SD Val | Val Max | Val Accuracy |
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 | 5 | 4 | 32 | elu | elu | adam | FALSE | 64 | 300 | 0.106 | 17.269 | 99.1 |
+
 <!-- norm -->
+
 | Encoder Layers | Discriminator Layers | Discriminator Units | Function | Discriminator Function | Optimizer | Dropout | Batch Size | Epochs | Rel SD Val | Val Max | Val Accuracy |
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 | 5 | 4 | 32 | elu | elu | adam | FALSE | 64 | 300 | 0.506 | 4.568 | 100 |
+
 <!-- stopped shuffling myself -->
+
 | Encoder Layers | Discriminator Layers | Discriminator Units | Function | Discriminator Function | Optimizer | Dropout | Batch Size | Epochs | Rel SD Val | Val Max | Val Accuracy |
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 | 5 | 4 | 32 | elu | elu | adam | FALSE | 64 | 300 | 0.577 | 8.563 | 99.1 |
+
 <!-- lr=0.0001 -->
+
 | Encoder Layers | Discriminator Layers | Discriminator Units | Function | Discriminator Function | Optimizer | Dropout | Batch Size | Epochs | Rel SD Val | Val Max | Val Accuracy |
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 | 5 | 4 | 32 | elu | elu | adam | FALSE | 64 | 300 | 0.069 | 71.4 | 98.1 |
 | 6 | 4 | 32 | elu | elu | adam | FALSE | 64 | 300 | 0.099 | 67.326 | 99.1 |
 | 6 | 4 | 32 | elu | elu | adam | FALSE | 64 | 500 | 0.051 | 114.735 | 99.5 |
 | 7 | 4 | 32 | elu | elu | adam | FALSE | 64 | 500 | 0.056 | 193.471 | 39.7 |
 | 7 | 5 | 32 | elu | elu | adam | FALSE | 64 | 500 | 0.159 | 45.534 | 70.1 |
+
 <!-- lr = 0.0002 -->
+
 | Encoder Layers | Discriminator Layers | Discriminator Units | Function | Discriminator Function | Optimizer | Dropout | Batch Size | Epochs | Rel SD Val | Val Max | Val Accuracy |
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 | 7 | 5 | 32 | elu | elu | adam | FALSE | 64 | 500 | 0.153 | 25.306 | 39.3 |
 | 7 | 5 | 64 | elu | elu | adam | FALSE | 64 | 500 | 0.109 | 84.613 | 64 |
 | 6 | 3 | 64 | elu | elu | adam | FALSE | 64 | 500 | 0.097 | 20.518 | 97.2 |
@@ -95,12 +107,10 @@ geometry: "margin=1in"
     - Accuracy:     0.864
     - ROC AUC:     0.932
 
-![The area under the ROC Curve is 0.497](../plots/11_Adversarial_Network/GSE62944/GSE62944.jpg)
-![The area under the ROC Curve is 0.932](../plots/11_Adversarial_Network/GSE62944/newGSE62944.jpg)
-
-![Two dimensional PCA plot of METABRIC, GSE62944](../plots/11_Adversarial_Network/GSE62944/GSE62944PCA.jpg)
-![Two dimensional PCA plot of METABRIC, newGSE62944](../plots/11_Adversarial_Network/GSE62944/rangeEachGSE62944PCA.jpg)
-
+| Recipe Set | ROC | PCA |
+|:---:|:---:|:---:|
+| GSE25055 | ![The area under the ROC Curve is 0.497](../plots/11_Adversarial_Network/GSE62944/GSE62944.jpg) | ![Two dimensional PCA plot of METABRIC, GSE62944](../plots/11_Adversarial_Network/GSE62944/GSE62944PCA.jpg) |
+| GSE62944 | ![The area under the ROC Curve is 0.932](../plots/11_Adversarial_Network/GSE62944/newGSE62944.jpg) | ![Two dimensional PCA plot of METABRIC, newGSE62944](../plots/11_Adversarial_Network/GSE62944/rangeEachGSE62944PCA.jpg) |
 
 | Data Set | Max | Min | Mean | Median | SD |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -316,9 +326,11 @@ geometry: "margin=1in"
 | val [after] | 2.358 | -2.674 | 0.223 | 0.191 | 0.637 |
 | test [after] | 2.725 | -2.317 | 0.232 | 0.197 | 0.653 |
 
-| ![Two dimensional PCA plot of standardBefore, trainBefore](../plots/11_Adversarial_Network/GSE25055/trainBeforeROC.jpg) | ![Two dimensional PCA plot of standardBefore, valBefore](../plots/11_Adversarial_Network/GSE25055/valBeforeROC.jpg) | ![Two dimensional PCA plot of standardBefore, testBefore](../plots/11_Adversarial_Network/GSE25055/testBeforeROC.jpg) |
-| ![Two dimensional PCA plot of standardEmbed, trainEmbed](../plots/11_Adversarial_Network/GSE25055/trainEmbedROC.jpg) | ![Two dimensional PCA plot of standardEmbed, valEmbed](../plots/11_Adversarial_Network/GSE25055/valEmbedROC.jpg) | ![Two dimensional PCA plot of standardEmbed, testEmbed](../plots/11_Adversarial_Network/GSE25055/testEmbedROC.jpg) |
-| ![Two dimensional PCA plot of standardAfter, trainAfter](../plots/11_Adversarial_Network/GSE25055/trainAfterROC.jpg) | ![Two dimensional PCA plot of standardAfter, valAfter](../plots/11_Adversarial_Network/GSE25055/valAfterROC.jpg) | ![Two dimensional PCA plot of standardAfter, testAfter](../plots/11_Adversarial_Network/GSE25055/testAfterROC.jpg) |
+| Time | Train | Val | Test |
+|:---:|:---:|:---:|:---:|
+| Before | ![Two dimensional PCA plot of standardBefore, trainBefore](../plots/11_Adversarial_Network/GSE25055/trainBeforeROC.jpg) | ![Two dimensional PCA plot of standardBefore, valBefore](../plots/11_Adversarial_Network/GSE25055/valBeforeROC.jpg) | ![Two dimensional PCA plot of standardBefore, testBefore](../plots/11_Adversarial_Network/GSE25055/testBeforeROC.jpg) |
+| During | ![Two dimensional PCA plot of standardEmbed, trainEmbed](../plots/11_Adversarial_Network/GSE25055/trainEmbedROC.jpg) | ![Two dimensional PCA plot of standardEmbed, valEmbed](../plots/11_Adversarial_Network/GSE25055/valEmbedROC.jpg) | ![Two dimensional PCA plot of standardEmbed, testEmbed](../plots/11_Adversarial_Network/GSE25055/testEmbedROC.jpg) |
+| After | ![Two dimensional PCA plot of standardAfter, trainAfter](../plots/11_Adversarial_Network/GSE25055/trainAfterROC.jpg) | ![Two dimensional PCA plot of standardAfter, valAfter](../plots/11_Adversarial_Network/GSE25055/valAfterROC.jpg) | ![Two dimensional PCA plot of standardAfter, testAfter](../plots/11_Adversarial_Network/GSE25055/testAfterROC.jpg) |
 
 #### trainBefore Confusion Matrix
 
