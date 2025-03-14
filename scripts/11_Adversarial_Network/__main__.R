@@ -6,7 +6,7 @@ run  = function(file) {
 
 valCheck = FALSE
 stall = FALSE
-novelName = "GSE25055"
+novelName = "GSE62944"
 
 run("setup")
 run("prepareData")

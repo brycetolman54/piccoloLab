@@ -1,10 +1,8 @@
 # read in models and predict on data ###########################################
 
-if(!exists("Encoder") || !exists("standardEncoder") || !exists("standardDecoder")) {
-    standardEncoder = load_model("models/10_Standard_Auto_Encoder/encoder.keras")
-    standardDecoder = load_model("models/10_Standard_Auto_Encoder/decoder.keras")
-    Encoder = load_model(paste0(models, "encoder", "_", novelName, ".keras"))
-}
+standardEncoder = load_model("models/10_Standard_Auto_Encoder/encoder.keras")
+standardDecoder = load_model("models/10_Standard_Auto_Encoder/decoder.keras")
+Encoder = load_model(paste0(models, "encoder_", novelName, ".keras"))
 
 standardEmbed = standardEncoder |> predict(standardMat, verbose = 0)
 trainEmbed = Encoder |> predict(trainMat, verbose = 0)

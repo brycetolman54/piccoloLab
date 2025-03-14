@@ -99,6 +99,9 @@ geometry: "margin=1in"
     - 0.0002 Learning Rate
     - Stop Wait: 20
 
+## Initial Classification (for comparison)
+<!--{-->
+
   Stats:
     - Accuracy:     0.227
     - ROC AUC:     0.497
@@ -111,6 +114,15 @@ geometry: "margin=1in"
 |:---:|:---:|:---:|
 | GSE25055 | ![The area under the ROC Curve is 0.497](../plots/11_Adversarial_Network/GSE62944/GSE62944.jpg) | ![Two dimensional PCA plot of METABRIC, GSE62944](../plots/11_Adversarial_Network/GSE62944/GSE62944PCA.jpg) |
 | GSE62944 | ![The area under the ROC Curve is 0.932](../plots/11_Adversarial_Network/GSE62944/newGSE62944.jpg) | ![Two dimensional PCA plot of METABRIC, newGSE62944](../plots/11_Adversarial_Network/GSE62944/rangeEachGSE62944PCA.jpg) |
+
+<!--}-->
+
+## Training Plot
+
+![Training plot of GSE62944](../plots/11_Adversarial_Network/GSE62944/_trainModel_GSE62944_.jpg)
+
+## Data Metrics
+<!--{-->
 
 | Data Set | Max | Min | Mean | Median | SD |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -127,16 +139,18 @@ geometry: "margin=1in"
 | val [after] | 8.763 | -10.404 | -0.054 | 0.037 | 1.069 |
 | test [after] | 9.739 | -18.482 | -0.089 | 0.032 | 1.124 |
 
+<!--}-->
 
-![Two dimensional PCA plot of standardBefore, trainBefore](../plots/11_Adversarial_Network/GSE62944/trainBeforeROC.jpg)
-![Two dimensional PCA plot of standardBefore, valBefore](../plots/11_Adversarial_Network/GSE62944/valBeforeROC.jpg)
-![Two dimensional PCA plot of standardBefore, testBefore](../plots/11_Adversarial_Network/GSE62944/testBeforeROC.jpg)
-![Two dimensional PCA plot of standardEmbed, trainEmbed](../plots/11_Adversarial_Network/GSE62944/trainEmbedROC.jpg)
-![Two dimensional PCA plot of standardEmbed, valEmbed](../plots/11_Adversarial_Network/GSE62944/valEmbedROC.jpg)
-![Two dimensional PCA plot of standardEmbed, testEmbed](../plots/11_Adversarial_Network/GSE62944/testEmbedROC.jpg)
-![Two dimensional PCA plot of standardAfter, trainAfter](../plots/11_Adversarial_Network/GSE62944/trainAfterROC.jpg)
-![Two dimensional PCA plot of standardAfter, valAfter](../plots/11_Adversarial_Network/GSE62944/valAfterROC.jpg)
-![Two dimensional PCA plot of standardAfter, testAfter](../plots/11_Adversarial_Network/GSE62944/testAfterROC.jpg)
+## PCA Plots
+
+| Time | Train | Val | Test |
+|:---:|:---:|:---:|:---:|
+| Before | ![Two dimensional PCA plot of standardBefore, trainBefore](../plots/11_Adversarial_Network/GSE62944/trainBeforePCA.jpg) | ![Two dimensional PCA plot of standardBefore, valBefore](../plots/11_Adversarial_Network/GSE62944/valBeforePCA.jpg) | ![Two dimensional PCA plot of standardBefore, testBefore](../plots/11_Adversarial_Network/GSE62944/testBeforePCA.jpg) |
+| During | ![Two dimensional PCA plot of standardEmbed, trainEmbed](../plots/11_Adversarial_Network/GSE62944/trainEmbedPCA.jpg) | ![Two dimensional PCA plot of standardEmbed, valEmbed](../plots/11_Adversarial_Network/GSE62944/valEmbedPCA.jpg) | ![Two dimensional PCA plot of standardEmbed, testEmbed](../plots/11_Adversarial_Network/GSE62944/testEmbedPCA.jpg) |
+| After | ![Two dimensional PCA plot of standardAfter, trainAfter](../plots/11_Adversarial_Network/GSE62944/trainAfterPCA.jpg) | ![Two dimensional PCA plot of standardAfter, valAfter](../plots/11_Adversarial_Network/GSE62944/valAfterPCA.jpg) | ![Two dimensional PCA plot of standardAfter, testAfter](../plots/11_Adversarial_Network/GSE62944/testAfterPCA.jpg) |
+
+## Prediction Metrics
+<!--{-->
 
 #### trainBefore Confusion Matrix
 
@@ -184,103 +198,96 @@ geometry: "margin=1in"
 
 |   Predicted/Actual    |   +   |   -   |
 | :-------------------: | :---: | :---: |
-|           +           |  315  |  86  |
-|           -           |  67  |  28  |
+|           +           |  317  |  87  |
+|           -           |  65  |  27  |
 
 #### trainEmbed Metrics
 
-- Accuracy:     0.692
-- Precision:    0.786
-- Recall:       0.825
-- Specificity:  0.246
+- Accuracy:     0.694
+- Precision:    0.785
+- Recall:       0.83
+- Specificity:  0.237
 
 #### valEmbed Confusion Matrix
 
 |   Predicted/Actual    |   +   |   -   |
 | :-------------------: | :---: | :---: |
-|           +           |  121  |  35  |
-|           -           |  42  |  16  |
+|           +           |  119  |  35  |
+|           -           |  44  |  16  |
 
 #### valEmbed Metrics
 
-- Accuracy:     0.64
-- Precision:    0.776
-- Recall:       0.742
+- Accuracy:     0.631
+- Precision:    0.773
+- Recall:       0.73
 - Specificity:  0.314
 
 #### testEmbed Confusion Matrix
 
 |   Predicted/Actual    |   +   |   -   |
 | :-------------------: | :---: | :---: |
-|           +           |  199  |  47  |
-|           -           |  41  |  18  |
+|           +           |  203  |  47  |
+|           -           |  37  |  18  |
 
 #### testEmbed Metrics
 
-- Accuracy:     0.711
-- Precision:    0.809
-- Recall:       0.829
+- Accuracy:     0.725
+- Precision:    0.812
+- Recall:       0.846
 - Specificity:  0.277
 
 #### trainAfter Confusion Matrix
 
 |   Predicted/Actual    |   +   |   -   |
 | :-------------------: | :---: | :---: |
-|           +           |  309  |  88  |
-|           -           |  73  |  26  |
+|           +           |  306  |  87  |
+|           -           |  76  |  27  |
 
 #### trainAfter Metrics
 
-- Accuracy:     0.675
-- Precision:    0.778
-- Recall:       0.809
-- Specificity:  0.228
+- Accuracy:     0.671
+- Precision:    0.779
+- Recall:       0.801
+- Specificity:  0.237
 
 #### valAfter Confusion Matrix
 
 |   Predicted/Actual    |   +   |   -   |
 | :-------------------: | :---: | :---: |
-|           +           |  120  |  33  |
-|           -           |  43  |  18  |
+|           +           |  119  |  35  |
+|           -           |  44  |  16  |
 
 #### valAfter Metrics
 
-- Accuracy:     0.645
-- Precision:    0.784
-- Recall:       0.736
-- Specificity:  0.353
+- Accuracy:     0.631
+- Precision:    0.773
+- Recall:       0.73
+- Specificity:  0.314
 
 #### testAfter Confusion Matrix
 
 |   Predicted/Actual    |   +   |   -   |
 | :-------------------: | :---: | :---: |
-|           +           |  194  |  47  |
-|           -           |  46  |  18  |
+|           +           |  197  |  48  |
+|           -           |  43  |  17  |
 
 #### testAfter Metrics
 
-- Accuracy:     0.695
-- Precision:    0.805
-- Recall:       0.808
-- Specificity:  0.277
+- Accuracy:     0.702
+- Precision:    0.804
+- Recall:       0.821
+- Specificity:  0.262
 
-![The area under the ROC Curve is 0.491](../plots/11_Adversarial_Network/GSE62944/trainBeforeROC.jpg)
+<!--}-->
 
-![The area under the ROC Curve is 0.503](../plots/11_Adversarial_Network/GSE62944/valBeforeROC.jpg)
 
-![The area under the ROC Curve is 0.504](../plots/11_Adversarial_Network/GSE62944/testBeforeROC.jpg)
+## ROC Curves
 
-![The area under the ROC Curve is 0.543](../plots/11_Adversarial_Network/GSE62944/trainEmbedROC.jpg)
-
-![The area under the ROC Curve is 0.565](../plots/11_Adversarial_Network/GSE62944/valEmbedROC.jpg)
-
-![The area under the ROC Curve is 0.558](../plots/11_Adversarial_Network/GSE62944/testEmbedROC.jpg)
-
-![The area under the ROC Curve is 0.574](../plots/11_Adversarial_Network/GSE62944/trainAfterROC.jpg)
-
-![The area under the ROC Curve is 0.545](../plots/11_Adversarial_Network/GSE62944/valAfterROC.jpg)
-
-![The area under the ROC Curve is 0.565](../plots/11_Adversarial_Network/GSE62944/testAfterROC.jpg)
+| Time | Train | Val | Test |
+|:---:|:---:|:---:|:---:|
+| Before | ![The area under the ROC Curve is 0.491](../plots/11_Adversarial_Network/GSE62944/trainBeforeROC.jpg){#plot-0 width=100%} | ![The area under the ROC Curve is 0.503](../plots/11_Adversarial_Network/GSE62944/valBeforeROC.jpg){#plot-0 width=100%} | ![The area under the ROC Curve is 0.504](../plots/11_Adversarial_Network/GSE62944/testBeforeROC.jpg){#plot-0 width=100%} |
+| During | ![The area under the ROC Curve is 0.554](../plots/11_Adversarial_Network/GSE62944/trainEmbedROC.jpg){#plot-0 width=100%} | ![The area under the ROC Curve is 0.564](../plots/11_Adversarial_Network/GSE62944/valEmbedROC.jpg){#plot-0 width=100%} | ![The area under the ROC Curve is 0.566](../plots/11_Adversarial_Network/GSE62944/testEmbedROC.jpg){#plot-0 width=100%} |
+| After | ![The area under the ROC Curve is 0.57](../plots/11_Adversarial_Network/GSE62944/trainAfterROC.jpg){#plot-0 width=100%} | ![The area under the ROC Curve is 0.559](../plots/11_Adversarial_Network/GSE62944/valAfterROC.jpg){#plot-0 width=100%} | ![The area under the ROC Curve is 0.551](../plots/11_Adversarial_Network/GSE62944/testAfterROC.jpg){#plot-0 width=100%} |
 
 <!--}-->
 
@@ -297,6 +304,9 @@ geometry: "margin=1in"
     - 0.0001 Learning Rate
     - Stop Wait: 40
 
+## Initial Classification (for comparison)
+<!--{-->
+
   Stats:
     - Accuracy:     0.419
     - ROC AUC:     0.278
@@ -305,11 +315,19 @@ geometry: "margin=1in"
     - Accuracy:     0.78
     - ROC AUC:     0.917
 
-![The area under the ROC Curve is 0.278](../plots/11_Adversarial_Network/GSE25055/GSE25055.jpg)
-![The area under the ROC Curve is 0.917](../plots/11_Adversarial_Network/GSE25055/newGSE25055.jpg)
+| Recipe Set | ROC | PCA |
+|:---:|:---:|:---:|
+| GSE25055 | ![The area under the ROC Curve is 0.278](../plots/11_Adversarial_Network/GSE25055/GSE25055.jpg) | ![Two dimensional PCA plot of Standard, GSE25055](../plots/11_Adversarial_Network/GSE25055/GSE25055PCA.jpg) |
+| GSE62944 | ![The area under the ROC Curve is 0.917](../plots/11_Adversarial_Network/GSE25055/newGSE25055.jpg) | ![Two dimensional PCA plot of Standard, newGSE25055](../plots/11_Adversarial_Network/GSE25055/rangeEachGSE25055PCA.jpg) |
 
-![Two dimensional PCA plot of Standard, GSE25055](../plots/11_Adversarial_Network/GSE25055/GSE25055PCA.jpg)
-![Two dimensional PCA plot of Standard, newGSE25055](../plots/11_Adversarial_Network/GSE25055/rangeEachGSE25055PCA.jpg)
+<!--}-->
+
+## Training Plot
+
+![Training plot of GSE25055](../plots/11_Adversarial_Network/GSE25055/_trainModel_GSE25055_.jpg)
+
+## Data Metrics
+<!--{-->
 
 | Data Set | Max | Min | Mean | Median | SD |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -326,11 +344,18 @@ geometry: "margin=1in"
 | val [after] | 2.358 | -2.674 | 0.223 | 0.191 | 0.637 |
 | test [after] | 2.725 | -2.317 | 0.232 | 0.197 | 0.653 |
 
+<!--}-->
+
+## PCA Plots
+
 | Time | Train | Val | Test |
 |:---:|:---:|:---:|:---:|
-| Before | ![Two dimensional PCA plot of standardBefore, trainBefore](../plots/11_Adversarial_Network/GSE25055/trainBeforeROC.jpg) | ![Two dimensional PCA plot of standardBefore, valBefore](../plots/11_Adversarial_Network/GSE25055/valBeforeROC.jpg) | ![Two dimensional PCA plot of standardBefore, testBefore](../plots/11_Adversarial_Network/GSE25055/testBeforeROC.jpg) |
-| During | ![Two dimensional PCA plot of standardEmbed, trainEmbed](../plots/11_Adversarial_Network/GSE25055/trainEmbedROC.jpg) | ![Two dimensional PCA plot of standardEmbed, valEmbed](../plots/11_Adversarial_Network/GSE25055/valEmbedROC.jpg) | ![Two dimensional PCA plot of standardEmbed, testEmbed](../plots/11_Adversarial_Network/GSE25055/testEmbedROC.jpg) |
-| After | ![Two dimensional PCA plot of standardAfter, trainAfter](../plots/11_Adversarial_Network/GSE25055/trainAfterROC.jpg) | ![Two dimensional PCA plot of standardAfter, valAfter](../plots/11_Adversarial_Network/GSE25055/valAfterROC.jpg) | ![Two dimensional PCA plot of standardAfter, testAfter](../plots/11_Adversarial_Network/GSE25055/testAfterROC.jpg) |
+| Before | ![Two dimensional PCA plot of standardBefore, trainBefore](../plots/11_Adversarial_Network/GSE25055/trainBeforePCA.jpg) | ![Two dimensional PCA plot of standardBefore, valBefore](../plots/11_Adversarial_Network/GSE25055/valBeforePCA.jpg) | ![Two dimensional PCA plot of standardBefore, testBefore](../plots/11_Adversarial_Network/GSE25055/testBeforePCA.jpg) |
+| During | ![Two dimensional PCA plot of standardEmbed, trainEmbed](../plots/11_Adversarial_Network/GSE25055/trainEmbedPCA.jpg) | ![Two dimensional PCA plot of standardEmbed, valEmbed](../plots/11_Adversarial_Network/GSE25055/valEmbedPCA.jpg) | ![Two dimensional PCA plot of standardEmbed, testEmbed](../plots/11_Adversarial_Network/GSE25055/testEmbedPCA.jpg) |
+| After | ![Two dimensional PCA plot of standardAfter, trainAfter](../plots/11_Adversarial_Network/GSE25055/trainAfterPCA.jpg) | ![Two dimensional PCA plot of standardAfter, valAfter](../plots/11_Adversarial_Network/GSE25055/valAfterPCA.jpg) | ![Two dimensional PCA plot of standardAfter, testAfter](../plots/11_Adversarial_Network/GSE25055/testAfterPCA.jpg) |
+
+## Prediction Metrics
+<!--{-->
 
 #### trainBefore Confusion Matrix
 
@@ -458,34 +483,33 @@ geometry: "margin=1in"
 - Recall:       1
 - Specificity:  0.275
 
-![The area under the ROC Curve is 0.281](../plots/11_Adversarial_Network/GSE25055/trainBeforeROC.jpg)
+<!--}-->
 
-![The area under the ROC Curve is 0.21](../plots/11_Adversarial_Network/GSE25055/valBeforeROC.jpg)
+## ROC Curves
 
-![The area under the ROC Curve is 0.315](../plots/11_Adversarial_Network/GSE25055/testBeforeROC.jpg)
-
-![The area under the ROC Curve is 0.673](../plots/11_Adversarial_Network/GSE25055/trainEmbedROC.jpg)
-
-![The area under the ROC Curve is 0.566](../plots/11_Adversarial_Network/GSE25055/valEmbedROC.jpg)
-
-![The area under the ROC Curve is 0.697](../plots/11_Adversarial_Network/GSE25055/testEmbedROC.jpg)
-
-![The area under the ROC Curve is 0.777](../plots/11_Adversarial_Network/GSE25055/trainAfterROC.jpg)
-
-![The area under the ROC Curve is 0.78](../plots/11_Adversarial_Network/GSE25055/valAfterROC.jpg)
-
-![The area under the ROC Curve is 0.816](../plots/11_Adversarial_Network/GSE25055/testAfterROC.jpg)
+| Time | Train | Val | Test |
+|:---:|:---:|:---:|:---:|
+| Before | ![The area under the ROC Curve is 0.281](../plots/11_Adversarial_Network/GSE25055/trainBeforeROC.jpg) | ![The area under the ROC Curve is 0.21](../plots/11_Adversarial_Network/GSE25055/valBeforeROC.jpg) | ![The area under the ROC Curve is 0.315](../plots/11_Adversarial_Network/GSE25055/testBeforeROC.jpg) |
+| During | ![The area under the ROC Curve is 0.673](../plots/11_Adversarial_Network/GSE25055/trainEmbedROC.jpg) | ![The area under the ROC Curve is 0.566](../plots/11_Adversarial_Network/GSE25055/valEmbedROC.jpg) | ![The area under the ROC Curve is 0.697](../plots/11_Adversarial_Network/GSE25055/testEmbedROC.jpg) |
+| After | ![The area under the ROC Curve is 0.777](../plots/11_Adversarial_Network/GSE25055/trainAfterROC.jpg) | ![The area under the ROC Curve is 0.78](../plots/11_Adversarial_Network/GSE25055/valAfterROC.jpg) | ![The area under the ROC Curve is 0.816](../plots/11_Adversarial_Network/GSE25055/testAfterROC.jpg) |
 
 <!--}-->
 
-# Using both
+# Comparing the Two
 <!--{-->
 
 - This is from using the conformed GSE25055 data set to train a model and predict on the conformed GSE62944 data set
 
+## Plots
 
-![Two dimensional PCA plot of GSE25055Before, GSE62944Before](../plots/11_Adversarial_Network/distinguish/GSE62944BeforePCA.jpg)
-![The area under the ROC Curve is 0.299](../plots/11_Adversarial_Network/distinguish/GSE62944BeforeROC.jpg)
+| Time | PCA | ROC|
+|:---:|:---:|:---:|
+| ![Two dimensional PCA plot of GSE25055Before, GSE62944Before](../plots/11_Adversarial_Network/distinguish/GSE62944BeforePCA.jpg) | ![The area under the ROC Curve is 0.299](../plots/11_Adversarial_Network/distinguish/GSE62944BeforeROC.jpg) |
+| ![Two dimensional PCA plot of GSE25055During, GSE62944During](../plots/11_Adversarial_Network/distinguish/GSE62944DuringPCA.jpg) | ![The area under the ROC Curve is 0.529](../plots/11_Adversarial_Network/distinguish/GSE62944DuringROC.jpg) |
+| ![Two dimensional PCA plot of GSE25055After, GSE62944After](../plots/11_Adversarial_Network/distinguish/GSE62944AfterPCA.jpg) | ![The area under the ROC Curve is 0.534](../plots/11_Adversarial_Network/distinguish/GSE62944AfterROC.jpg) |
+
+## Prediction Metrics
+<!--{-->
 
 #### Before Conformation (GSE62944) Confusion Matrix
 
@@ -501,9 +525,6 @@ geometry: "margin=1in"
 - Recall:       0
 - Specificity:  0.996
 
-![Two dimensional PCA plot of GSE25055During, GSE62944During](../plots/11_Adversarial_Network/distinguish/GSE62944DuringPCA.jpg)
-![The area under the ROC Curve is 0.529](../plots/11_Adversarial_Network/distinguish/GSE62944DuringROC.jpg)
-
 #### During Conformation (GSE62944) Confusion Matrix
 
 |   Predicted/Actual    |   +   |   -   |
@@ -517,9 +538,6 @@ geometry: "margin=1in"
 - Precision:    0.778
 - Recall:       0.899
 - Specificity:  0.122
-
-![Two dimensional PCA plot of GSE25055After, GSE62944After](../plots/11_Adversarial_Network/distinguish/GSE62944AfterPCA.jpg)
-![The area under the ROC Curve is 0.534](../plots/11_Adversarial_Network/distinguish/GSE62944AfterROC.jpg)
 
 #### After Conformation (GSE62944) Confusion Matrix
 
@@ -535,8 +553,8 @@ geometry: "margin=1in"
 - Recall:       0.89
 - Specificity:  0.126
 
-
 <!--}-->
 
+<!--}-->
 
 

@@ -7,7 +7,7 @@ batchSize = 64
 
 stopCount = 0
 stopMin = 1
-stopWait = 40
+stopWait = 20
 
 # read in the Standard Encoder and Decoder
 standardEncoder = load_model("models/10_Standard_Auto_Encoder/encoder.keras")

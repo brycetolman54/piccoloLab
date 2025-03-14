@@ -75,5 +75,5 @@ rmList = c(ls(), "rmList")
 rmList = rmList[!rmList %in% data]
 rm(list = rmList)
 
-
+invisible(gc())
 
