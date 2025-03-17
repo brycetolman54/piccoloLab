@@ -1,5 +1,5 @@
 rmList = c(ls(), "rmList")
-rmList = rmList[!rmList %in% c("METABRIC")]
+rmList = rmList[!rmList %in% standardNames]
 rm(list = rmList)
 
 invisible(gc())

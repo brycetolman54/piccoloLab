@@ -342,10 +342,6 @@ if(!dir.exists(models)) dir.create(models)
 # save the models
 save_model(Encoder, paste0(models, "encoder.keras"), overwrite = TRUE)
 save_model(Decoder, paste0(models, "decoder.keras"), overwrite = TRUE)
-save_model(AutoEncoder, paste0(models, "autoEncoder.keras"), overwrite = TRUE)
-save_model(Encoder_2D, paste0(models, "encoder2D.keras"), overwrite = TRUE)
-save_model(Decoder_2D, paste0(models, "decoder2D.keras"), overwrite = TRUE)
-save_model(AutoEncoder_2D, paste0(models, "autoEncoder2D.keras"), overwrite = TRUE)
 
 # define the folder to use for the model data
 dist = paste0("variables/Model_Data/")

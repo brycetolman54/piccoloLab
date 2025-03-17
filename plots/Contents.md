@@ -22,3 +22,5 @@
     - This folder contains the plots created in the [Standard AutoEncoder Script](../scripts/10_Standard_Auto_Encoder.R)
 11. [Adversarial Network](./11_Adversarial_Network)
     - This folder contains the plots created in the [Adversarial Network Script](../scripts/11_Adversarial_Network)
+12. [Modifying the Network (Part 1)](./12_Modifying_Network_Part_1)
+    - This folder contains the plots created in the [Modifying the Network (Part 1) script](../scripts/12_Modifying_Network_Part_1)

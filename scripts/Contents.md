@@ -33,6 +33,9 @@
 10. [Standard Auto-Encoder](./10_Standard_Auto_Encoder.R)
     - This contains the script that I use to create the Standard Auto-Encoder for the model
     - This is part one of my plan
-11. [Adversarial Network](./11_Adversarial_Network.R)
+11. [Adversarial Network](./11_Adversarial_Network)
     - This contains the scripts that I use to conform my novel data set to the standard
     - This is part two of my plan
+12. [Modifying the Network](./12_Modifying_Network_Part_1)
+    - This contains the scripts that I use to test different variations of the models I started in scripts 10 and 11
+    - This is a continuation of parts 1 and 2 of my plan

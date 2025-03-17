@@ -504,9 +504,9 @@ geometry: "margin=1in"
 
 | Time | PCA | ROC|
 |:---:|:---:|:---:|
-| ![Two dimensional PCA plot of GSE25055Before, GSE62944Before](../plots/11_Adversarial_Network/distinguish/GSE62944BeforePCA.jpg) | ![The area under the ROC Curve is 0.299](../plots/11_Adversarial_Network/distinguish/GSE62944BeforeROC.jpg) |
-| ![Two dimensional PCA plot of GSE25055During, GSE62944During](../plots/11_Adversarial_Network/distinguish/GSE62944DuringPCA.jpg) | ![The area under the ROC Curve is 0.529](../plots/11_Adversarial_Network/distinguish/GSE62944DuringROC.jpg) |
-| ![Two dimensional PCA plot of GSE25055After, GSE62944After](../plots/11_Adversarial_Network/distinguish/GSE62944AfterPCA.jpg) | ![The area under the ROC Curve is 0.534](../plots/11_Adversarial_Network/distinguish/GSE62944AfterROC.jpg) |
+| Before | ![Two dimensional PCA plot of GSE25055Before, GSE62944Before](../plots/11_Adversarial_Network/distinguish/GSE62944BeforePCA.jpg) | ![The area under the ROC Curve is 0.299](../plots/11_Adversarial_Network/distinguish/GSE62944BeforeROC.jpg) |
+| During | ![Two dimensional PCA plot of GSE25055During, GSE62944During](../plots/11_Adversarial_Network/distinguish/GSE62944DuringPCA.jpg) | ![The area under the ROC Curve is 0.529](../plots/11_Adversarial_Network/distinguish/GSE62944DuringROC.jpg) |
+| After | ![Two dimensional PCA plot of GSE25055After, GSE62944After](../plots/11_Adversarial_Network/distinguish/GSE62944AfterPCA.jpg) | ![The area under the ROC Curve is 0.534](../plots/11_Adversarial_Network/distinguish/GSE62944AfterROC.jpg) |
 
 ## Prediction Metrics
 <!--{-->

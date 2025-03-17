@@ -1,0 +1,9 @@
+suppressWarnings({
+    rm(
+        Encoder,
+        Decoder,
+        AutoEncoder,
+        run_
+    )
+})
+invisible(gc())

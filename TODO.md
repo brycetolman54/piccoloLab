@@ -62,21 +62,21 @@
         - [X] Test out what it is like with 2 dimensions compared to PCA
         - [X] Optimize the number of layers, activation function, number of dimensions kept, to get the lowest MSE (DONT DO ANYTHING WITH TEST DATA UNTIL THE END)
         - [ ] Maybe rerun multiple times with a different seed to be able to compare the test to the validation set (by a t-test) to see if they are really different
-    - [ ] Implement the Discriminator
-    - [ ] Look at classification (like you said to in your plan)
-    - [ ] Document your work
-    - [ ] Do PCA of METABRIC, then reduce to two dimensions to compare (qualitatively...)
-    - [ ] Keep track of your optimizations in case you need them for the paper
+    - [X] Implement the Discriminator
+    - [X] Look at classification (like you said to in your plan)
+    - [X] Document your work
+    - [X] Do PCA of METABRIC, then reduce to two dimensions to compare (qualitatively...)
+    - [X] Keep track of your optimizations in case you need them for the paper
 
 - [X] Do PCA of transformed standard (after Decoder) to compare to before
 - [X] Look at the stats of the transformed data (like you did before making the AutoEncoder)
 
 
 
-- [ ] Conform GSE25655
-- [ ] Train tree on that, predict on GSE62944
+- [X] Conform GSE25655
+- [X] Train tree on that, predict on GSE62944
 - [ ] After conforming both, add label of data set and see if the model can distinguish them
-- [ ] Randomly select 10 genes instead of using the PCA ones from lessGenes and see if you get similar results
+- [ ] Randomly select 100 genes instead of using the PCA ones from lessGenes and see if you get similar results
 
 - [ ] Ref: 62944/META
 - [ ] Test: 25055, 25065, 123845 separately

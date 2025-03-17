@@ -42,3 +42,5 @@
     - This contains the walk through of my code that I use to generate the Standard Auto-Encoder for my model
 17. [Adversarial Network](./17_Adversarial_Network.md)
     - This contains the walk through of my code that I use to create an adversarial network in order to conform my novel data set to the Standard
+18. [Modifying Network (Part 1)](./18_Modifying_Network_Part_1.md)
+    - This contains the data obtained as I work to modify my network to obtain optimal results

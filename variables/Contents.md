@@ -7,3 +7,5 @@
     - This is for use in creating the deep learning model, as not to require such great computational resources
 - [Model Data](./Model_Data)
     - [Standard AutoEncoder Distribution](./Model_Data/Standard_Distribution.tsv)
+- [Standards](./standards)
+    - These are different standard data sets that have been used in modifying my model using the [Modifying the Network script](../scripts/12_Modifying_Network_Part_1)
