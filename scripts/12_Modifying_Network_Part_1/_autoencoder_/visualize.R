@@ -1,6 +1,6 @@
 if(optimizing) {
-    eval = AutoEncoder |> evaluate(get(standardMat[3]), get(standardMat[3]), verbose = 0)
-    cat("\n|", layers, "|", actFun, "|", optimizer, "|", embeddingSize, "|", dropout, "|", batchSize, "|", which.min(history$metrics$val_loss), "|", round(eval[[2]], 3), "|\n\n")
+    eval = AutoEncoder |> evaluate(get(standardMat[2]), get(standardMat[2]), verbose = 0)
+    cat("\n|", aeLayers, "|", aeActFun, "|", aeOptim, "|", aeLr, "|", embeddingSize, "|", aeDropout, "|", aeBatchSize, "|", which.min(history$metrics$val_loss), "|", round(eval[[2]], 3), "|\n\n")
 } else {
     # transform the data
     assign(standardTimes[1], as.matrix(StandardMat))
@@ -41,7 +41,12 @@ if(optimizing) {
         plotPCA(standardTimes[i],
                 title = paste0("Standard ", times[i], " Embedding"),
                 folder = plots,
-                filename = paste0(times[i], "PCA"))
+                filename = paste0(times[i], extraName, "PCA"))
         cat("\b |")
     }
+    cat("\n")
+    plotPCA(c(standardTimes[1], standardTimes[3]),
+            title = "Standard Before and After Embedding",
+            folder = plots,
+            filename = paste0("beforeAndAfter", extraName, "PCA"))
 }

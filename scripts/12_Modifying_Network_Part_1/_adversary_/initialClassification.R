@@ -1,17 +1,17 @@
 # craft the recipe
-recipe = recipe(formula, data = Standard) |>
+recipe = recipe(formula, data = standarD) |>
     step_normalize(all_predictors()) |>
     step_mutate(Class = as.factor(Class)) |>
-    prep(training = Standard)
+    prep(training = standarD)
 
 # craft recipe for novel data separately
-recipeNovel = recipe(formula, data = novel) |>
+recipeNovel = recipe(formula, data = get(newNovelName)) |>
     step_normalize(all_predictors()) |>
     step_mutate(Class = as.factor(Class)) |>
-    prep(training = novel)
+    prep(training = get(newNovelName))
 
 # bake the data
-bakeFiles(c("Standard", novelName), recipe)
+bakeFiles(c("standarD", "novel"), recipe)
 bakeFiles(newNovelName, recipeNovel)
 
 cat("\n")
@@ -23,12 +23,12 @@ set.seed(42)
 model = rand_forest(trees = 25,
                     mode = "classification",
                     engine = "ranger")
-fitModel = model |> fit(formula, data = Standard)
+fitModel = model |> fit(formula, data = standarD)
 
 # predict on the test data
 suppressWarnings({
     mdOut = mdMetrics(fitModel,
-                      get(novelName),
+                      novel,
                       setName = novelName,
                       num = 1,
                       mdOutput = FALSE,
@@ -45,36 +45,36 @@ cat("| Plot Type | Standard Recipe | Novel Recipe |\n")
 cat("|:---:|:---:|:---:|\n| ROC | ")
 
 rcOut = rocCurve(fitModel,
-                 get(novelName),
-                 filename = novelName,
+                 novel,
+                 filename = paste0(novelName, extraName),
                  folder = plots,
                  title = "Initial Classification",
-                 subtitle = paste0("METABRIC predicting on ", novelName),
+                 subtitle = paste0("Standard predicting on ", novelName),
                  num = 1,
                  plot = FALSE,
                  output = TRUE)
 cat("\b\b | ")
 rcOut2 = rocCurve(fitModel,
                   get(newNovelName),
-                  filename = newNovelName,
+                  filename = paste0(newNovelName, extraName),
                   folder = plots,
                   title = "Initial Classification Each Recipe",
-                  subtitle = paste0("METABRIC predicting on ", newNovelName),
+                  subtitle = paste0("Standard predicting on ", newNovelName),
                   num = 2,
                   plot = FALSE,
                   output = TRUE)
 cat("\b\b |\n| PCA | ")
 
 # do PCA of the standard and novel
-plotPCA(c("Standard", novelName),
+plotPCA(c("standarD", "novel"),
         title = "Same Range Recipe PCA Plot",
         folder = plots,
-        filename = paste0(novelName, "PCA"))
+        filename = paste0(novelName, extraName, "PCA"))
 cat("\b | ")
-plotPCA(c("Standard", newNovelName),
+plotPCA(c("standarD", newNovelName),
         title = "Separate Range Recipe PCA Plot",
         folder = plots,
-        filename = paste0("rangeEach", novelName, "PCA"))
+        filename = paste0("rangeEach", novelName, extraName, "PCA"))
 cat("\b |")
 
 # print out some information

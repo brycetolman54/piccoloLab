@@ -1,48 +1,22 @@
+# set up the optimizers
+adOptimizer = do.call(get(paste0("optimizer_", adOptim)), list(learning_rate = lr))
+adOptimizerD = do.call(get(paste0("optimizer_", adOptim)), list(learning_rate = lr))
+
 cat("Preparing Model:")
 
 time = timer({
     # set the seed
-    tensorflow::set_random_seed(0)
-    
-    # set some variables (for the encoder)
-    inputSize = length(genes)
-    embeddingSize = 10
-    layers = 7
-    layerDrop = ceiling((inputSize - embeddingSize) / layers)
-    actFun = "elu"
-    
-    # set some vars for the decoder/adversary
-    optim = "adam"
-    lr = 0.0002
-    optimizer = optimizer_adam(learning_rate = lr)
-    dOptimizer = optimizer_adam(learning_rate = lr)
-    loss = "binary_crossentropy"
-    metric = "accuracy"
-    
-    # set some params for the decoder
-    dLayers = 5
-    units = 32
-    dActFun = "elu"
-    dropout = FALSE
-    rate = 0.4
-    
-    # define some variables for actual training
-    epochs = 101
-    interval = 10
-    batchSize = 64
-    stopCount = 0
-    stopMin = 1
-    stopWait = 20
+    tensorflow::set_random_seed(tfSeed)
     
     # define the encoder
     Encoder = keras_model_sequential(input_shape = c(inputSize),
                                      name = "Encoder")
-    for(layer in 1:(layers - 1)) {
+    for(layer in 1:(adLayers - 1)) {
         Encoder |> 
-            layer_dense(units = inputSize - layerDrop * layer,
-                        activation = actFun,
+            layer_dense(units = inputSize - adLayerDrop * layer,
+                        activation = adActFun,
                         name = paste0("Deflate_", layer))
-        if(dropout) {
+        if(adDropout) {
             Encoder |>
                 layer_dropout(rate = rate,
                               name = paste0("Dropout_", layer))
@@ -55,14 +29,14 @@ time = timer({
     # define the discriminator
     Discriminator = keras_model_sequential(input_shape = c(embeddingSize),
                                            name = "Discriminator")
-    for(layer in 1:(dLayers - 1)) {
+    for(layer in 1:(adLayersD - 1)) {
         Discriminator |>
             layer_dense(units = units,
-                        # activation = dActFun,
+                        # activation = adActFunD,
                         name = paste0("D", layer)) |>
             layer_batch_normalization() |>
-            layer_activation(dActFun)
-        if(dropout) {
+            layer_activation(adActFunD)
+        if(adDropout) {
             Discriminator |>
                 layer_dropout(rate = rate,
                               name = paste0("Dropout_", layer))
@@ -80,14 +54,14 @@ time = timer({
     Adversary = keras_model(input, output)
     
     # compile the Adversary
-    Adversary |> compile(optimizer = optimizer,
-                         loss = loss,
-                         metric = metric)
+    Adversary |> compile(optimizer = adOptimizer,
+                         loss = adLoss,
+                         metric = adMetric)
     
     # Compile the Discriminator
-    Discriminator |> compile(optimizer = dOptimizer,
-                             loss = loss,
-                             metric = metric)
+    Discriminator |> compile(optimizer = adOptimizerD,
+                             loss = adLoss,
+                             metric = adMetric)
 })
 
 cat("\t", time, "\n\n")

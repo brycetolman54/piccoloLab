@@ -1,14 +1,22 @@
 # read in the data
 for(name in standardNames) if(!exists(name)) readFiles(name, columns = c("Class", genes))
-Standard = bind_rows(mget(standardNames))
+
+# normalize if need be
+if(normalize) {
+    newStandardNames = paste0("new", standardNames)
+    for(i in 1:length(standardNames)) assign(newStandardNames[i], get(standardNames[i]) |> select(-Class) |> mutate(across(where(is.numeric), ~ (. - mean(.)) / sd(.))) |> bind_cols((get(standardNames[i]) |> select(Class))))
+    Standard = bind_rows(mget(newStandardNames))
+} else {
+    Standard = bind_rows(mget(standardNames))
+}
 
 # split the data
-if(normalize) Standard = Standard |> select(-Class) |> mutate(across(where(is.numeric), ~ (. - mean(.)) / sd(.))) |> bind_cols((Standard |> select(Class)))
 split = splitData(Standard, 0.3, 0.3, 0)
+standardClass = Standard |> select(Class)
 StandardMat = as.matrix(Standard |> select(-Class))
 
 # save this data set for later use
-write_tsv(Standard, paste0(vars, "standard.tsv"))
+write_tsv(Standard, paste0(vars, "standard", extraName, ".tsv"))
 standard = Standard
 
 # define lists

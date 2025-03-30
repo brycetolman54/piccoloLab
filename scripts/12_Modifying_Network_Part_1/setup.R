@@ -13,9 +13,6 @@ source("functions/timer.R")
 source("functions/color.R")
 source("functions/splitData.R")
 
-# load the genes
-genes = readLines("variables/lessGenes.txt")[1:100]
-
 # define folders
 models = paste0("models/", subfolder)
 if(!dir.exists(models)) dir.create(models)
@@ -23,6 +20,8 @@ standards = "variables/standards/"
 if(!dir.exists(standards)) dir.create(standards)
 vars = paste0(standards, subfolder)
 if(!dir.exists(vars)) dir.create(vars)
+
+extraName = ifelse(normalize, "normal", "")
 
 # define some lists
 data = c("train", "val", "test")
@@ -34,7 +33,7 @@ classes = paste0(data, "Classes")
 formula = Class ~ .
 
 # define functions
-plotHistory = function(standardMetrics, trainMetrics, valMetrics, epochs, interval, metric, doPrint) {
+plotHistory = function(standardMetrics, trainMetrics, valMetrics, epochs, interval, metric) {
     
     # clear the plot
     if(length(dev.list()) != 0) {
@@ -62,7 +61,7 @@ plotHistory = function(standardMetrics, trainMetrics, valMetrics, epochs, interv
     # plot the data
     metricPlot = metricData |> ggplot(aes(x = x, y = y, color = group)) +
         geom_line() + geom_point() + theme_dark() + 
-        scale_color_manual(values = c("orange", "#57d957", "#4fa3ff")) +
+        scale_color_manual(values = c("orange", "#4fa3ff", "#57d957")) +
         theme(panel.background = element_rect(fill = fillColor),
               plot.background = element_rect(fill = fillColor),
               legend.background = element_rect(fill = fillColor),
@@ -81,15 +80,9 @@ plotHistory = function(standardMetrics, trainMetrics, valMetrics, epochs, interv
         scale_y_continuous(limits = c(0, 1)) +
         labs(x = "Epoch", y = metric)
 
-    # plot the data
-    suppressMessages({
-        if(doPrint) print(metricPlot)
-    })
+    lastPlot = metricPlot
     
-    return(metricPlot)
-}
-saveModels = function() {
-    save_model(Encoder, paste0(models, "encoder", "_", novelName, ".keras"), overwrite = TRUE)
+    if(optimizing) print(metricPlot)
 }
 catMetrics = function(data, title, type = "") {
     typeStr = ifelse(type == "", "", paste0(" [", type, "]"))
@@ -125,12 +118,12 @@ predictData = function(trainer, start, stop, time) {
         title = paste0(time, " Conformation (", dataName, ")")
         
         cat(" ")
-        plotPCA(c(trainer, newData), folder = plots, filename = paste0(newData, "PCA"), title = title)
+        plotPCA(c(trainer, newData), folder = plots, filename = paste0(newData, extraName, "PCA"), title = title)
         cat("\b |")
         cat("\n ")
-        rocCurve(fitModel, get(newData), filename = paste0(newData, "ROC"), folder = plots,
+        rocCurve(fitModel, get(newData), filename = paste0(newData, extraName, "ROC"), folder = plots,
                  title = title, subtitle = paste0(trainer, " predicting on ", dataName))
-        cat("\b\b |")
+        cat("\b\b |\n\n")
         suppressWarnings({mdMetrics(fitModel, get(newData), setName = title)})
     }
 }

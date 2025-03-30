@@ -1,7 +1,7 @@
 # read in models
-standardEncoder = load_model(paste0(models, "standardEncoder.keras"))
-standardDecoder = load_model(paste0(models, "standardDecoder.keras"))
-Encoder = load_model(paste0(models, "encoder_", novelName, ".keras"))
+standardEncoder = load_model(paste0(models, "standardEncoder" , extraName, ".keras"))
+standardDecoder = load_model(paste0(models, "standardDecoder" , extraName, ".keras"))
+Encoder = load_model(paste0(models, "encoder_", novelName, "_", extraName, ".keras"))
 
 # predict on the data
 standardDuring = standardEncoder |> predict(standardBefore, verbose = 0)

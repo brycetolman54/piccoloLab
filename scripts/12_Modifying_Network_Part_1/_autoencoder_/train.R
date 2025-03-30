@@ -1,7 +1,3 @@
-# declare some variables
-epochs = 100
-batchSize = 6
-
 # make a callback function
 stopEarly = callback_early_stopping(
     monitor = "val_loss",
@@ -17,8 +13,8 @@ time = timer({
     history = AutoEncoder |> fit(
         x = get(standardMat[1]),
         y = get(standardMat[1]),
-        batch_size = batchSize,
-        epochs = epochs,
+        batch_size = aeBatchSize,
+        epochs = aeEpochs,
         validation_data = list(get(standardMat[2]),
                                get(standardMat[2])),
         callbacks = stopEarly,
@@ -29,6 +25,6 @@ time = timer({
 cat(" Done in", time, "\n")
 
 # save models
-save_model(Encoder, paste0(models, "standardEncoder.keras"), overwrite = TRUE)
-save_model(Decoder, paste0(models, "standardDecoder.keras"), overwrite = TRUE)
+save_model(Encoder, paste0(models, "standardEncoder", extraName, ".keras"), overwrite = TRUE)
+save_model(Decoder, paste0(models, "standardDecoder", extraName, ".keras"), overwrite = TRUE)
 

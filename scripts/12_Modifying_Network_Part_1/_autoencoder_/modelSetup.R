@@ -1,26 +1,18 @@
 # set the seed
-tensorflow::set_random_seed(0)
+tensorflow::set_random_seed(tfSeed)
 
-# initialize some variables
-inputSize = length(genes)
-embeddingSize = 10
-layers = 4
-dropout = FALSE
-layerDrop = ceiling((inputSize - embeddingSize) / layers)
-actFun = "elu"
-optimizer = "adam"
-loss = "mse"
-metric = "mae"
+# get the optimizer
+aeOptimizer = do.call(get(paste0("optimizer_", aeOptim)), list(learning_rate = aeLr))
 
 # define the Encoder
 Encoder = keras_model_sequential(input_shape = c(inputSize),
                                  name = "standardEncoder")
-for(layer in 1:(layers - 1)) {
+for(layer in 1:(aeLayers - 1)) {
     Encoder |> 
-        layer_dense(units = inputSize - layerDrop * layer,
-                    activation = actFun,
+        layer_dense(units = inputSize - aeLayerDrop * layer,
+                    activation = aeActFun,
                     name = paste0("Deflate_", layer))
-    if(dropout) {
+    if(aeDropout) {
         Encoder|>
             layer_dropout(rate = 0.4,
                           name = paste0("Dropout_", layer))
@@ -33,12 +25,12 @@ Encoder |>
 # define the Decoder
 Decoder = keras_model_sequential(input_shape = c(embeddingSize),
                                  name = "standardDecoder")
-for(layer in 1:(layers - 1)) {
+for(layer in 1:(aeLayers - 1)) {
     Decoder |> 
-        layer_dense(units = embeddingSize + layerDrop * layer,
-                    activation = actFun,
+        layer_dense(units = embeddingSize + aeLayerDrop * layer,
+                    activation = aeActFun,
                     name = paste0("Inflate_", layer))
-    if(dropout) {
+    if(aeDropout) {
         Decoder |>
             layer_dropout(rate = 0.4,
                           name = paste0("Dropout_", layer))
@@ -59,7 +51,7 @@ AutoEncoder = keras_model(inputs = input,
 
 # compile the AutoEncoder
 AutoEncoder |> compile(
-    optimizer = optimizer,
-    loss = loss,
-    metrics = metric
+    optimizer = aeOptimizer,
+    loss = aeLoss,
+    metrics = aeMetric
 )

@@ -1,13 +1,13 @@
 cat("Training:\n\n")
 
 # read in the Standard Encoder and Decoder
-standardEncoder = load_model(paste0(models, "standardEncoder.keras"))
-standardDecoder = load_model(paste0(models, "standardDecoder.keras"))
+standardEncoder = load_model(paste0(models, "standardEncoder" , extraName, ".keras"))
+standardDecoder = load_model(paste0(models, "standardDecoder" , extraName, ".keras"))
 
 # set up vectors to hold the losses and metrics through the epochs
-standardMetric = numeric(epochs / interval)
-trainMetric = numeric(epochs / interval)
-valMetric = numeric(epochs / interval)
+standardMetric = numeric(adEpochs / interval)
+trainMetric = numeric(adEpochs / interval)
+valMetric = numeric(adEpochs / interval)
 
 valMetrics = numeric(interval)
 
@@ -23,10 +23,13 @@ y1 = rep(1, nrow(standard))
 y2 = rep(0, nrow(train))
 yDis = c(y1, y2)
 
+# set up stoping criterium
+stopMin = 1
+
 # train
 time = timer({
     catEpoch = 0
-    for(epoch in 1:epochs) {
+    for(epoch in 1:adEpochs) {
         
         timeMe = timer({
             
@@ -40,7 +43,7 @@ time = timer({
             history = Discriminator |> fit(
                 x = xDis,
                 y = yDis,
-                batch_size = batchSize,
+                batch_size = adBatchSize,
                 epochs = 1,
                 validation_data = list(valDis,
                                        valClass),
@@ -53,7 +56,7 @@ time = timer({
             history = Adversary |> fit(
                 x = xAdv,
                 y = yAdv,
-                batch_size = batchSize,
+                batch_size = adBatchSize,
                 epochs = 1,
                 validation_data = list(valAdv,
                                        valClass),
@@ -81,18 +84,19 @@ time = timer({
             valMetric[index] = mean(valMetrics)
             
             # plot the data
-            lastPlot = plotHistory(standardMetric, trainMetric, valMetric, epochs, interval, metric, optimizing)
+            lastPlot = plotHistory(standardMetric, trainMetric, valMetric, adEpochs, interval, adMetric)
+            if(optimizing) print(lastPlot)
             
             # print out the metrics
             if(optimizing) color(cat("    Standard: ", sprintf("%.3f", round(standardMetric[index], 3)), "    Train: ", sprintf("%.3f", round(trainMetric[index], 3)), "    Val: ", sprintf("%.3f", round(valMetric[index], 3)), "\n", sep = ""),12)
 
             # implement the stopping criteria
-            if(epoch > 100) {
+            if(epoch > waitEpoch) {
                 lowPoint = mean(valMetrics)
                 if(lowPoint <= stopMin) {
                     stopCount = 0 # restart the count
                     stopMin = lowPoint # get the lowest metric so far
-                    saveModels() # save the Encoder
+                    save_model(Encoder, paste0(models, "encoder", "_", novelName, "_", extraName, ".keras"), overwrite = TRUE) # save the Encoder
                     catEpoch = epoch # save the epoch of the lowest point
                     if(optimizing) color(cat("\b\tSaved\n"), 217)
                 } else {
@@ -109,7 +113,7 @@ time = timer({
             # get the validation stats
             progressData = Encoder |> predict(valBefore, verbose = 0)
             
-            if(optimizing) color(printMetrics(progressData, "val", "embedded"), 5)
+            if(optimizing) color(catMetrics(progressData, "val", "embedded"), 5)
             
             # check if we want to stop for another reason
             if(optimizing && stall) {
@@ -129,7 +133,7 @@ time = timer({
 
 cat("\nTrained in ", time, "\n", sep = "")
 
-ggsave(paste0(plots, "_trainModel_", novelName, "_.jpg"), plot = lastPlot, width = 6, height = 4)
+ggsave(paste0(plots, "_trainModel_", novelName, "_", extraName, ".jpg"), plot = lastPlot, width = 6, height = 4)
 
 # output for validation
-if(optimizing) cat("\n|", layers, "|", dLayers, "|", units, "|", actFun, "|", dActFun, "|", optim, "|", dropout, "|", batchSize, "|", catEpoch, "|", round(sd(progressData) / max(progressData), 3), "|", round(max(progressData), 3), "|", round(stopMin, 3) * 100, "|")
+if(optimizing) cat("\n|", novelName, "|", adLayers, "|", adLayersD, "|", units, "|", adActFun, "|", adActFunD, "|", adOptim, "|", adDropout, "|", adBatchSize, "|", catEpoch, "|", round(sd(progressData) / max(progressData), 3), "|", round(max(progressData), 3), "|", round(stopMin, 3) * 100, "|")

@@ -7,12 +7,12 @@ tibbleData = as.vector(outer(dataNames, times, paste0))
 matDataNames = paste0("mat", tibbleData)
 
 # define plots folder
-plots = paste0("plots/distinguish/")
+plots = paste0("plots/", subfolder, "distinguish/")
 if(!dir.exists(plots)) dir.create(plots)
 
 # load the Encoders and Decoder
-decoder = load_model(models, "standardDecoder.keras")
-for(i in 1:size) assign(encoders[i], load_model(paste0(models, "encoder_", dataNames[i], ".keras")))
+decoder = load_model(paste0(models, "standardDecoder.keras"))
+for(i in 1:size) assign(encoders[i], load_model(paste0(models, "encoder_", dataNames[i], "_", extraName, ".keras")))
 
 # load the data
 for(datum in dataNames) if(!exists(datum)) readFiles(datum, columns = c("Class", genes))
