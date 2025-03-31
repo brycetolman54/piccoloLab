@@ -1,3 +1,5 @@
+tensorflow::tf$get_logger()$setLevel("ERROR")
+
 # set up the subfolder #########################################################
 subfolder = "12_Modifying_Network_Part_1/"
 run  = function(file) source(paste0("scripts/", subfolder, file, ".R"))
@@ -35,7 +37,7 @@ aeActFun = "elu"
 aeOptim = "adam"
 aeLr = 0.002
 aeLoss = "mse"
-aeMetric = "mae"
+aeMetric = c("mae")
 
 ################################################################################
 
@@ -47,7 +49,7 @@ aeBatchSize = 32
 
 # params for adversary network model ###########################################
 # set some params for the encoder portion
-adLayers = 10
+adLayers = 8
 adLayerDrop = ceiling((inputSize - embeddingSize) / adLayers)
 adActFun = "elu"
 
@@ -55,7 +57,7 @@ adActFun = "elu"
 adOptim = "adam"
 lr = 0.0001
 adLoss = "binary_crossentropy"
-adMetric = "accuracy"
+adMetric = c("accuracy")
 adDropout = FALSE
 
 # set some params for the decoder

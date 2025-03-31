@@ -32,10 +32,10 @@ time = timer({
     for(layer in 1:(adLayersD - 1)) {
         Discriminator |>
             layer_dense(units = units,
-                        # activation = adActFunD,
-                        name = paste0("D", layer)) |>
-            layer_batch_normalization() |>
-            layer_activation(adActFunD)
+                        activation = adActFunD,
+                        name = paste0("D", layer))
+            # layer_batch_normalization() |>
+            # layer_activation(adActFunD)
         if(adDropout) {
             Discriminator |>
                 layer_dropout(rate = rate,

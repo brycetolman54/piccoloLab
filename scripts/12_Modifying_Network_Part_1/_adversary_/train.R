@@ -1,8 +1,8 @@
 cat("Training:\n\n")
 
 # read in the Standard Encoder and Decoder
-standardEncoder = load_model(paste0(models, "standardEncoder" , extraName, ".keras"))
-standardDecoder = load_model(paste0(models, "standardDecoder" , extraName, ".keras"))
+standardEncoder = load_model_tf(paste0(models, "standardEncoder" , extraName))
+standardDecoder = load_model_tf(paste0(models, "standardDecoder" , extraName))
 
 # set up vectors to hold the losses and metrics through the epochs
 standardMetric = numeric(adEpochs / interval)
@@ -79,8 +79,8 @@ time = timer({
             index = epoch / interval
             
             # get the data
-            standardMetric[index] = evaluate(Discriminator, x1, y1, verbose = 0)[[1]]
-            trainMetric[index] = evaluate(Adversary, xAdv, rep(0, nrow(train)), verbose = 0)[[1]]
+            standardMetric[index] = evaluate(Discriminator, x1, y1, verbose = 0)[[2]]
+            trainMetric[index] = evaluate(Adversary, xAdv, rep(0, nrow(train)), verbose = 0)[[2]]
             valMetric[index] = mean(valMetrics)
             
             # plot the data
@@ -122,9 +122,7 @@ time = timer({
                 if(continue == "n") {
                     break
                 } else if(continue == "s") {
-                    tryCatch({
-                        stop("Stopped")
-                    }, error = function(e){})
+                    stop("Stopped")
                 }
             }
         }

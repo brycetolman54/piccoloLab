@@ -1,9 +1,11 @@
 # do imports
-library(tidyverse)
-library(keras3)
-suppressMessages(library(tensorflow))
-library(tidymodels)
-library(rsample)
+suppressMessages({
+  library(tidyverse)
+  library(keras)
+  suppressMessages(library(tensorflow))
+  library(tidymodels)
+  library(rsample)
+})
 source("functions/readFiles.R")
 source("functions/bakeFiles.R")
 source("functions/rocCurve.R")
