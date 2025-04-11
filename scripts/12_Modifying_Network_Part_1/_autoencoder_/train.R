@@ -25,6 +25,6 @@ time = timer({
 cat(" Done in", time, "\n")
 
 # save models
-save_model_tf(Encoder, paste0(models, "standardEncoder", extraName), overwrite = TRUE)
-save_model_tf(Decoder, paste0(models, "standardDecoder", extraName), overwrite = TRUE)
+save_model_tf(Encoder, paste0(models, "standardEncoder_", embeddingSize, "D_", extraName), overwrite = TRUE)
+save_model_tf(Decoder, paste0(models, "standardDecoder_", embeddingSize, "D_", extraName), overwrite = TRUE)
 

@@ -9,7 +9,7 @@ run  = function(file) source(paste0("scripts/", subfolder, file, ".R"))
 # switches for outputs #########################################################
 normalize = TRUE
 optimizing = TRUE
-stall = TRUE
+stall = FALSE
 
 ################################################################################
 
@@ -25,7 +25,7 @@ novelNames = c("GSE25055")
 
 # params for both networks #####################################################
 tfSeed = 0
-embeddingSize = 5
+embeddingSize = 10
 
 ################################################################################
 
@@ -42,7 +42,7 @@ aeMetric = c("mae")
 ################################################################################
 
 # params for autoencoder training ##############################################
-aeEpochs = 100
+aeEpochs = 200
 aeBatchSize = 32
 
 ################################################################################
@@ -61,7 +61,7 @@ adMetric = c("accuracy")
 adDropout = FALSE
 
 # set some params for the decoder
-adLayersD = 8
+adLayersD = 6
 units = 64
 adActFunD = "elu"
 adDropout = FALSE
@@ -70,8 +70,8 @@ rate = 0.4
 ################################################################################
 
 # params for adversary network training ########################################
-adEpochs = 1000
-waitEpoch = 100
+adEpochs = 500
+waitEpoch = 150
 interval = 10
 adBatchSize = 64
 stopCount = 0

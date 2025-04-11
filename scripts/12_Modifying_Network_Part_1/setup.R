@@ -102,6 +102,9 @@ tibblerize = function(data, classes) {
     data = bind_cols(data, classes)
     return(data)
 }
+vectorize = function(data) {
+  return(as.numeric(data[[1]]) - 1)
+}
 predictData = function(trainer, start, stop, time) {
     
     set.seed(42)

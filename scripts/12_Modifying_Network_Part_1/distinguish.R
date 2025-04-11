@@ -11,8 +11,8 @@ plots = paste0("plots/", subfolder, "distinguish/")
 if(!dir.exists(plots)) dir.create(plots)
 
 # load the Encoders and Decoder
-decoder = load_model(paste0(models, "standardDecoder.keras"))
-for(i in 1:size) assign(encoders[i], load_model(paste0(models, "encoder_", dataNames[i], "_", extraName, ".keras")))
+decoder = load_model_tf(paste0(models, "standardDecoder"))
+for(i in 1:size) assign(encoders[i], load_model_tf(paste0(models, "encoder_", dataNames[i], "_", extraName)))
 
 # load the data
 for(datum in dataNames) if(!exists(datum)) readFiles(datum, columns = c("Class", genes))

@@ -1,8 +1,8 @@
 cat("Training:\n\n")
 
 # read in the Standard Encoder and Decoder
-standardEncoder = load_model_tf(paste0(models, "standardEncoder" , extraName))
-standardDecoder = load_model_tf(paste0(models, "standardDecoder" , extraName))
+standardEncoder = load_model_tf(paste0(models, "standardEncoder_", embeddingSize, "D_" , extraName))
+standardDecoder = load_model_tf(paste0(models, "standardDecoder_", embeddingSize, "D_", extraName))
 
 # set up vectors to hold the losses and metrics through the epochs
 standardMetric = numeric(adEpochs / interval)
@@ -13,17 +13,21 @@ valMetrics = numeric(interval)
 
 # prepare the data for the models
 xAdv = trainBefore
+xAdvClasses = vectorize(trainClasses)
 yAdv = rep(1, nrow(train))
 
 valAdv = valBefore
+valClasses = vectorize(valClasses)
 valClass = rep(0, nrow(val))
 
 x1 = standardEncoder |> predict(standardBefore, verbose = 0)
 y1 = rep(1, nrow(standard))
 y2 = rep(0, nrow(train))
 yDis = c(y1, y2)
+x1Classes = vectorize(standardClasses)
+classesDis = c(x1Classes, xAdvClasses)
 
-# set up stoping criterium
+# set up stopping criterium
 stopMin = 1
 
 # train
@@ -36,9 +40,9 @@ time = timer({
             if(optimizing) color(cat("  Epoch", epoch), 242)
             
             x2 = Encoder |> predict(trainBefore, verbose = 0)
-            xDis = rbind(x1, x2)
+            xDis = rbind(x1, x2) |> cbind(classesDis)
             
-            valDis = Encoder |> predict(valBefore, verbose = 0)
+            valDis = Encoder |> predict(valBefore, verbose = 0) |> cbind(valClasses)
             
             history = Discriminator |> fit(
                 x = xDis,
@@ -54,12 +58,11 @@ time = timer({
             Discriminator$trainable = FALSE
             
             history = Adversary |> fit(
-                x = xAdv,
+                x = list(xAdv, xAdvClasses),
                 y = yAdv,
                 batch_size = adBatchSize,
                 epochs = 1,
-                validation_data = list(valAdv,
-                                       valClass),
+                validation_data = list(list(valAdv, valClasses), valClass),
                 verbose = 0
             )
             
@@ -79,8 +82,8 @@ time = timer({
             index = epoch / interval
             
             # get the data
-            standardMetric[index] = evaluate(Discriminator, x1, y1, verbose = 0)[[2]]
-            trainMetric[index] = evaluate(Adversary, xAdv, rep(0, nrow(train)), verbose = 0)[[2]]
+            standardMetric[index] = evaluate(Discriminator, cbind(x1, x1Classes), y1, verbose = 0)[[2]]
+            trainMetric[index] = evaluate(Adversary, list(xAdv, xAdvClasses), rep(0, nrow(train)), verbose = 0)[[2]]
             valMetric[index] = mean(valMetrics)
             
             # plot the data
@@ -93,10 +96,10 @@ time = timer({
             # implement the stopping criteria
             if(epoch > waitEpoch) {
                 lowPoint = mean(valMetrics)
-                if(lowPoint <= stopMin) {
+                if(lowPoint < stopMin) {
                     stopCount = 0 # restart the count
                     stopMin = lowPoint # get the lowest metric so far
-                    save_model(Encoder, paste0(models, "encoder", "_", novelName, "_", extraName, ".keras"), overwrite = TRUE) # save the Encoder
+                    save_model_tf(Encoder, paste0(models, "encoder_", novelName, "_", embeddingSize, "D_", extraName), overwrite = TRUE) # save the Encoder
                     catEpoch = epoch # save the epoch of the lowest point
                     if(optimizing) color(cat("\b\tSaved\n"), 217)
                 } else {

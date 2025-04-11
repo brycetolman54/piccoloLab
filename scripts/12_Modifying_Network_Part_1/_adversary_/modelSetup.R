@@ -27,15 +27,14 @@ time = timer({
                     name = "Embedding")
     
     # define the discriminator
-    Discriminator = keras_model_sequential(input_shape = c(embeddingSize),
+    Discriminator = keras_model_sequential(input_shape = c(embeddingSize + 1),
                                            name = "Discriminator")
     for(layer in 1:(adLayersD - 1)) {
         Discriminator |>
             layer_dense(units = units,
-                        activation = adActFunD,
-                        name = paste0("D", layer))
-            # layer_batch_normalization() |>
-            # layer_activation(adActFunD)
+                        name = paste0("D", layer)) |>
+            layer_batch_normalization() |>
+            layer_activation(adActFunD)
         if(adDropout) {
             Discriminator |>
                 layer_dropout(rate = rate,
@@ -48,10 +47,12 @@ time = timer({
                     name = "Output")
     
     # combine them into the Adversary
-    input = layer_input(inputSize, name = "Input")
-    embedding = Encoder(input)
-    output = Discriminator(embedding)
-    Adversary = keras_model(input, output)
+    genesInput = layer_input(inputSize, name = "Input")
+    classesInput = layer_input(shape = 1, name = "Classes")
+    embedding = Encoder(genesInput)
+    concat = layer_concatenate(list(embedding, classesInput), name = "Concat")
+    output = Discriminator(concat)
+    Adversary = keras_model(list(genesInput, classesInput), output, name = "Adversary")
     
     # compile the Adversary
     Adversary |> compile(optimizer = adOptimizer,
