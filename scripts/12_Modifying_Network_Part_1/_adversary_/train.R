@@ -17,7 +17,7 @@ xAdvClasses = vectorize(trainClasses)
 yAdv = rep(1, nrow(train))
 
 valAdv = valBefore
-valClasses = vectorize(valClasses)
+valAdvClasses = vectorize(valClasses)
 valClass = rep(0, nrow(val))
 
 x1 = standardEncoder |> predict(standardBefore, verbose = 0)
@@ -39,10 +39,10 @@ time = timer({
             
             if(optimizing) color(cat("  Epoch", epoch), 242)
             
-            x2 = Encoder |> predict(trainBefore, verbose = 0)
+            x2 = Encoder |> predict(cbind(trainBefore, xAdvClasses), verbose = 0)
             xDis = rbind(x1, x2) |> cbind(classesDis)
             
-            valDis = Encoder |> predict(valBefore, verbose = 0) |> cbind(valClasses)
+            valDis = Encoder |> predict(cbind(valBefore, valAdvClasses), verbose = 0) |> cbind(valAdvClasses)
             
             history = Discriminator |> fit(
                 x = xDis,
@@ -58,11 +58,11 @@ time = timer({
             Discriminator$trainable = FALSE
             
             history = Adversary |> fit(
-                x = list(xAdv, xAdvClasses),
+                x = list(cbind(xAdv, xAdvClasses), xAdvClasses),
                 y = yAdv,
                 batch_size = adBatchSize,
                 epochs = 1,
-                validation_data = list(list(valAdv, valClasses), valClass),
+                validation_data = list(list(cbind(valAdv, valAdvClasses), valAdvClasses), valClass),
                 verbose = 0
             )
             
@@ -83,7 +83,7 @@ time = timer({
             
             # get the data
             standardMetric[index] = evaluate(Discriminator, cbind(x1, x1Classes), y1, verbose = 0)[[2]]
-            trainMetric[index] = evaluate(Adversary, list(xAdv, xAdvClasses), rep(0, nrow(train)), verbose = 0)[[2]]
+            trainMetric[index] = evaluate(Adversary, list(cbind(xAdv, xAdvClasses), xAdvClasses), rep(0, nrow(train)), verbose = 0)[[2]]
             valMetric[index] = mean(valMetrics)
             
             # plot the data
@@ -114,7 +114,7 @@ time = timer({
             
         if(epoch %% 50 == 0) {
             # get the validation stats
-            progressData = Encoder |> predict(valBefore, verbose = 0)
+            progressData = Encoder |> predict(cbind(valBefore, valAdvClasses), verbose = 0)
             
             if(optimizing) color(catMetrics(progressData, "val", "embedded"), 5)
             

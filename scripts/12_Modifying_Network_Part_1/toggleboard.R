@@ -49,13 +49,14 @@ aeBatchSize = 32
 
 # params for adversary network model ###########################################
 # set some params for the encoder portion
-adLayers = 6
+adLayers = 8
 adLayerDrop = ceiling((inputSize - embeddingSize) / adLayers)
 adActFun = "elu"
 
 # set some vars for the decoder/adversary
 adOptim = "adam"
-lr = 0.0002
+lr = 0.001
+lrD = 0.001
 adLoss = "binary_crossentropy"
 adMetric = c("accuracy")
 adDropout = FALSE
@@ -64,17 +65,17 @@ adDropout = FALSE
 adLayersD = 4
 units = 64
 adActFunD = "elu"
-adDropout = FALSE
-rate = 0.4
+adDropout = TRUE
+rate = 0.1
 
 ################################################################################
 
 # params for adversary network training ########################################
 adEpochs = 500
-waitEpoch = 150
+waitEpoch = 10
 interval = 10
-adBatchSize = 64
+adBatchSize = 16
 stopCount = 0
-stopWait = 20
+stopWait = 10
 
 ################################################################################

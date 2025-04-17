@@ -5,6 +5,27 @@ collectMerged = function(filename,
                 classNegative = c("N"),
                 output = FALSE,
                 geneData = TRUE) {
+  
+    # Function to collect the gene expression data and metadata for a data set, extract the proper
+    # and combine those into a single data set for later use
+    #
+    # Inputs:
+    #   - filename (required): the name of the file from which to collect the data
+    #           the function assumes the expression data is found in a folder labeled "data"
+    #           and that the metadata is found in a file labeled "meta" and that the file in 
+    #           both has the same name
+    #   - colStart (required): the prefix to the gene names in the file [default is GSM, which is true for most of the data sets]
+    #   - classColumn (required): the column from which to get the Class data for the data set [default is er_status_ihc, which is true for GSE25055]
+    #   - classPositive (required): a list of values that signify a positive signal for the Class [default is c("P"), which is true for GSE25055]
+    #   - classNegative (required): a list of values that signify a negative signal for the Class [default is c("N"), which is true for GSE25055]
+    #   - output (optional): a boolean that determines if the function should return the adjusted data set [dfault is FALSE]
+    #   - geneData (optional): a boolean that determines whether or not to filter the genes based on whether they are protein-endcoding and 
+    #                          whether they are found on Chromosomes 1-23 and X/Y (this is relevant for data sets that do not have columns
+    #                          specifying the above things, which some of the ones added to our set later do not) [default is TRUE]
+    #
+    # Outputs:
+    #   - a file saved to a directory labeled "merged" under the same name as the expression and meta data
+    #   - (if desired) the newly created data set for further use
     
     # Make sure we have the requisite args
     if(missing(filename)) {

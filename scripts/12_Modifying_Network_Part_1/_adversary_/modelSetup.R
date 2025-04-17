@@ -1,6 +1,6 @@
 # set up the optimizers
 adOptimizer = do.call(get(paste0("optimizer_", adOptim)), list(learning_rate = lr))
-adOptimizerD = do.call(get(paste0("optimizer_", adOptim)), list(learning_rate = lr))
+adOptimizerD = do.call(get(paste0("optimizer_", adOptim)), list(learning_rate = lrD))
 
 cat("Preparing Model:")
 
@@ -9,7 +9,7 @@ time = timer({
     tensorflow::set_random_seed(tfSeed)
     
     # define the encoder
-    Encoder = keras_model_sequential(input_shape = c(inputSize),
+    Encoder = keras_model_sequential(input_shape = c(inputSize + 1),
                                      name = "Encoder")
     for(layer in 1:(adLayers - 1)) {
         Encoder |> 
@@ -47,7 +47,7 @@ time = timer({
                     name = "Output")
     
     # combine them into the Adversary
-    genesInput = layer_input(inputSize, name = "Input")
+    genesInput = layer_input(inputSize + 1, name = "Input")
     classesInput = layer_input(shape = 1, name = "Classes")
     embedding = Encoder(genesInput)
     concat = layer_concatenate(list(embedding, classesInput), name = "Concat")

@@ -1,4 +1,9 @@
-mdMetrics = function(model, data, mdOutput = TRUE, output = FALSE, setName = "", num = 0) {
+mdMetrics = function(model,
+                     data,
+                     mdOutput = TRUE,
+                     output = FALSE,
+                     setName = "",
+                     num = 0) {
     
     # Function to create and print out the metrics and confusion matrix for a test set prediction
     # 
@@ -57,6 +62,7 @@ mdMetrics = function(model, data, mdOutput = TRUE, output = FALSE, setName = "",
         cat("\n")
     }
     
+    # return the stats if you want to use them for anything
     if(output) {
         return(list(confMatrix = confusionMatrix, metrics = metrics))
     }
