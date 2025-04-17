@@ -82,3 +82,6 @@
 - [ ] Test: 25055, 25065, 123845 separately
 - [ ] Predict from 25055 to others
 - [ ] With and W/O standardizing before
+
+- [ ] Update update 18 with information about what I have done and my thoughts about it and where to go
+- [ ] Update Model Plan to talk about not doing the iteration idea

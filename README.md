@@ -7,6 +7,9 @@
 - We want to create an algorithm that is as generalizable as possible.
 - The data used for this process can be found on OSF at this [link](https://osf.io/eky3p/)
     - This data was collected and cleaned by Ifeanyichukwu Nwosu, a former PhD student of Dr. Piccolo
+- I have attempted to keep track of all of the computation that I have done in the form of R Scripts. Each of these scripts should be run from within the root directory of the project, not from within the "scripts/" folder.
+    - At the top of many of the scripts is a `setwd()` function that sets the working directory to my specific root directory on my computer. This line should be changed to reflect the location of your root directory in order to work properly.
+- To get a better idea of what the eventual model I want to build looks like, see my [Model Plan](./updates/15_Model_Plan.md)
 
 <!--}-->
 

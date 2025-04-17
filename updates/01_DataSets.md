@@ -11,6 +11,8 @@ https://docs.google.com/document/d/1xDCy5HCs2n-AlsM0vLBPpHYs3Qjya4OPvTwTLIUR8to/
 - The *GSE25055* is the data set used for training the model
 - The Size column tells what the size of the data set is after dropping any `NA` values in the `Class` column
 - The count column tells how many samples there were before I removed all `NA` or `indeterminate` values
+- The lines of "----" simply split the data sets by platform. The line with "=====" splits the data sets into "training" and "testing" data sets.
+    - There is more on this split in data sets in [Update 15: Model Plan](./15_Model_Plan.md)
 
 |  Data set   |  Count  |   Size  |              Collection Platform               |  Class Counts (+/-)  |
 |  :--------  |  :----  |  :----  |  :-------------------------------------------  |  :----------------:  |
