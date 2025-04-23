@@ -29,12 +29,20 @@
 - These are the folders that I have in my working directory:
     - data/
         - This folder holds the raw gene expression data obtained from <b>OSF</b>
+        - The following data sets can be found at this [link](https://drive.google.com/drive/folders/1smhpktMRyP4yyFHKHSisxRd9jwb8kvrq?usp=drive_link) rather than on <b>OSF</b>
+            - GSE123845
+            - GSE115577
+            - GSE163882
     - [functions/](./functions/Contents.md)
         - This folder holds a set of functions that I have written to help in several tasks.
     - merged/
         - This folder holds all of the data sets after the metadata and gene expression data has been merged by the `collectMerged()` function
     - meta/
         - This folder holds all of the metadata for the different data sets obtained from <b>OSF</b>
+        - The following data sets can be found at this [link](https://drive.google.com/drive/folders/1smhpktMRyP4yyFHKHSisxRd9jwb8kvrq?usp=drive_link) rather than on <b>OSF</b>: 
+          - GSE123845
+          - GSE115577
+          - GSE163882
     - models/
         - This folder holds all of the fit keras models that I use in my analysis, so I don't have to recreate them when I need to use them again.
     - [others/](./others/Contents.md)
