@@ -1,3 +1,8 @@
+################################################################################
+# shows how well we can predict from the standard to the novel before, during, a
+# nd after conformation
+################################################################################
+
 # read in models
 standardEncoder = load_model_tf(paste0(models, "standardEncoder_", embeddingSize, "D_", extraName))
 standardDecoder = load_model_tf(paste0(models, "standardDecoder_", embeddingSize, "D_", extraName))

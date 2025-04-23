@@ -1,0 +1,8 @@
+- This is just a note to tell you what the files in here mean.
+- These are images of the training of the <b>Adversary</b> with different hyperparameters. This is an attempt to show you what I have seen in order to help you see why I have tried what I have.
+- To decipher the file names, here is a key:
+    - The first number is the number of layers in the <i>Encoder</i>
+    - The second is the number of layers in the <i>Discriminator</i>
+    - The third is the number of units per layer in the <i>Discriminator</i>
+    - The fourth (if there is one) is the learning rate of the <i>Encoder</i>
+    - The fifth (if there is one) is the learning rate of the <i>Discriminator</i>

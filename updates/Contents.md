@@ -44,3 +44,5 @@
     - This contains the walk through of my code that I use to create an adversarial network in order to conform my novel data set to the Standard
 18. [Modifying Network (Part 1)](./18_Modifying_Network_Part_1.md)
     - This contains the data obtained as I work to modify my network to obtain optimal results
+19. [Transferring Work](./19_Transferring_Work.md)
+    - This contains the update about what I have done with the project and what I have seen that may be of use for further work

@@ -1,8 +1,3 @@
-################################################################################
-# creates the models that will be used in the training and testing
-################################################################################
-
-
 # set up the optimizers
 adOptimizer = do.call(get(paste0("optimizer_", adOptim)), list(learning_rate = lr))
 adOptimizerD = do.call(get(paste0("optimizer_", adOptim)), list(learning_rate = lrD))
@@ -14,7 +9,7 @@ time = timer({
     tensorflow::set_random_seed(tfSeed)
     
     # define the encoder
-    Encoder = keras_model_sequential(input_shape = c(inputSize),
+    Encoder = keras_model_sequential(input_shape = c(inputSize + 1),
                                      name = "Encoder")
     for(layer in 1:(adLayers - 1)) {
         Encoder |> 
@@ -32,7 +27,7 @@ time = timer({
                     name = "Embedding")
     
     # define the discriminator
-    Discriminator = keras_model_sequential(input_shape = c(embeddingSize),
+    Discriminator = keras_model_sequential(input_shape = c(embeddingSize + 1),
                                            name = "Discriminator")
     for(layer in 1:(adLayersD - 1)) {
         Discriminator |>
@@ -52,10 +47,12 @@ time = timer({
                     name = "Output")
     
     # combine them into the Adversary
-    input = layer_input(inputSize, name = "Input")
-    embedding = Encoder(input)
-    output = Discriminator(embedding)
-    Adversary = keras_model(input, output, name = "Adversary")
+    genesInput = layer_input(inputSize + 1, name = "Input")
+    classesInput = layer_input(shape = 1, name = "Classes")
+    embedding = Encoder(genesInput)
+    concat = layer_concatenate(list(embedding, classesInput), name = "Concat")
+    output = Discriminator(concat)
+    Adversary = keras_model(list(genesInput, classesInput), output, name = "Adversary")
     
     # compile the Adversary
     Adversary |> compile(optimizer = adOptimizer,

@@ -1,3 +1,8 @@
+################################################################################
+# reads in and prepares data sets for use in the later scripts, also sets up som
+# e folders for later use
+################################################################################
+
 # define folders
 plots = paste0("plots/", subfolder, novelName, "/")
 if(!dir.exists(plots)) dir.create(plots)

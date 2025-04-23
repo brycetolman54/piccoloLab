@@ -1,4 +1,6 @@
-tensorflow::tf$get_logger()$setLevel("ERROR")
+################################################################################
+# the main place to change model parameters and such
+################################################################################
 
 # set up the subfolder #########################################################
 subfolder = "12_Modifying_Network_Part_1/"

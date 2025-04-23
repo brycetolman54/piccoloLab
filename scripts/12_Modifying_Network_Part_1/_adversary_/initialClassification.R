@@ -1,3 +1,7 @@
+################################################################################
+# shows how well the standard predicts on the novel before any work is done
+################################################################################
+
 # craft the recipe
 recipe = recipe(formula, data = standarD) |>
     step_normalize(all_predictors()) |>
